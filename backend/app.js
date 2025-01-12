@@ -9,15 +9,27 @@ require('dotenv').config();
 const { mongoDB } = require("./database/connect/mongo-db");
 mongoDB();
 
+const { swaggerUi, specs } = require("./swagger/swagger");
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
 
-app.use(cors({
-  origin: process.env.CLIENT_URL // 클라이언트 도메인 허용
-}))
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'MONITO API',
+      version: '1.0.0',
+      description: '모니또 API 명세서',
+    },
+  },
+  apis: ['./routes/**/*.js'],
+};
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use(cors({ origin: process.env.CLIENT_URL })); //클라이언트 도메인 허용
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

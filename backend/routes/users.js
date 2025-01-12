@@ -5,7 +5,48 @@ const moment = require('moment')
 const { User } = require('../models/User.js')
 const { auth } = require('../middleware/auth.js')
 
-// 로그인
+/**
+ * @openapi
+ * /api/users/login:
+ *   post:
+ *     tags: 
+ *       - users
+ *     summary: "로그인"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: "사용자 이메일"
+ *                 example: "user@example.com"
+ *     responses:
+ *       200:
+ *         description: "로그인 성공"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 id:
+ *                   type: string
+ *                   description: "사용자 고유 식별값"
+ *                   example: "60d9f8f2b3e31f2c6b9c9a73"
+ *                 email:
+ *                   type: string
+ *                   description: "사용자 이메일"
+ *                   example: "user@example.com"
+ *                 token:
+ *                   type: string
+ *                   description: "JWT 토큰값"
+ *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ */
 router.post('/login', (req, res) => {
     User.findOne(
         { email: req.body.email }
@@ -34,11 +75,38 @@ router.post('/login', (req, res) => {
     })
 })
 
-// 로그아웃
+/**
+ * @openapi
+ * /api/users/logout:
+ *   get:
+ *     tags: 
+ *       - users
+ *     summary: "로그아웃"
+ *     parameters:
+ *       - name: _id
+ *         in: path
+ *         description: "사용자 고유 식별값"
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: "60a57f9b4f1a2c1abc123456"
+ *     responses:
+ *       200:
+ *         description: "로그아웃 성공"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+
+ */
 router.get('/logout', auth, (req, res) => {
     console.log('Logout request received')
     User.findOneAndUpdate(
-        { _id: req.user._id }, 
+        { _id: req.params._id }, 
         { token: '' }
     )
     .then(user => {
