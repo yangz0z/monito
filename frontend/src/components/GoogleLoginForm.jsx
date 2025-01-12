@@ -1,20 +1,38 @@
 import { useState } from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import CountDown from "./CountDown";
+import axios from "axios";
+import base64 from "base-64";
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 const GoogleLoginForm = () => {
   const [user, setUser] = useState(null);
 
-  const handleSuccess = (response) => {
+  const handleSuccess = async (response) => {
     const { credential } = response;
-    // 여기서 Google의 credential을 활용하여 사용자 정보를 가져올 수 있음
-    console.log("Google Credential:", credential);
-    setUser({
-      name: "Logged-in User",
-      email: "user@example.com", // 사용자 정보를 Google API를 통해 가져올 수 있음
-    });
+    const payload = credential.substring(
+      credential.indexOf(".") + 1,
+      credential.lastIndexOf(".")
+    );
+    const dec = base64.decode(payload);
+    const { email, name } = JSON.parse(dec);
+    try {
+      // 백엔드로 GET 요청 보내기;
+      const { data } = await axios.post(
+        "https://monito-api-blue.vercel.app/api/users/login",
+        { email, name }
+      );
+
+      // 응답 데이터로 사용자 정보 설정
+      setUser({
+        name: data.name,
+        email: data.email,
+      });
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      alert("사용자 정보를 가져오는 데 문제가 발생했습니다.");
+    }
   };
 
   const handleError = () => {
@@ -27,7 +45,7 @@ const GoogleLoginForm = () => {
         {!user ? (
           <>
             <div>
-              <img src="src/icon_gift.png" />
+              <img src="src/icon_gift.png" alt="Gift Icon" />
             </div>
             <h1 className="text-4xl text-gray-600 font-medium	mt-2 mb-5">
               MONITO
