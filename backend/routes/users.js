@@ -47,19 +47,13 @@ const { auth } = require('../middleware/auth.js')
  *                   description: "JWT 토큰값"
  *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
  */
-router.post('/login', (req, res) => {
-    User.findOne(
-        { email: req.body.email }
-    ).then((user) => {
-        if(!user) {
-            user = new User(req.body)
-            user.regDate = moment().format('YYYY-MM-DD HH:mm:ss')
-            user.save().then(() => {
-                return res.status(200).json({ success: true })
-            }).catch((err) => {
-                console.log(err)
-                return res.json({ success: false, err })
-            })
+router.post('/login', async (req, res) => {
+    try {
+        let user = await User.findOne({ email: req.body.email });
+        if (!user) {
+            user = new User(req.body);
+            user.regDate = moment().format('YYYY-MM-DD HH:mm:ss');
+            await user.save()
         }
         user.generateToken((err, user) => {
             if (err) return res.status(400).send(err)
@@ -68,11 +62,9 @@ router.post('/login', (req, res) => {
                 .status(200)
                 .json({ success: true, id: user._id, email: user.email, token: user.token })
         })
-    })
-    .catch((err) => {
-        console.log(err)
-        res.json({ success:false, err })
-    })
+    } catch (err) {
+        res.status(500).send(err)
+    }
 })
 
 /**
@@ -103,22 +95,20 @@ router.post('/login', (req, res) => {
  *                   example: true
 
  */
-router.get('/logout', auth, (req, res) => {
-    console.log('Logout request received')
-    User.findOneAndUpdate(
-        { _id: req.params._id }, 
-        { token: '' }
-    )
-    .then(user => {
+router.get('/logout', auth, async (req, res) => {
+    try {
+        const user = await User.findOneAndUpdate(
+            { _id: req.params._id }, 
+            { token: '' }
+        )
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' })
         }
         return res.status(200).json({ success: true })
-    })
-    .catch(err => {
-        console.log(err)
-        return res.status(500).json({ success: false, err })
-    })
+    } catch (err) {
+        return res.status(500).json({ success: false, message: 'Server error' })
+    }
+    
 })
 
 // 인가
