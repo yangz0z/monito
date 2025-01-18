@@ -3,6 +3,7 @@ var router = express.Router()
 const moment = require('moment')
 
 const { User } = require('../models/User.js')
+const { Event } = require('../models/Event.js')
 const { auth } = require('../middleware/auth.js')
 
 /**
@@ -46,6 +47,30 @@ const { auth } = require('../middleware/auth.js')
  *                   type: string
  *                   description: "JWT 토큰값"
  *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+ *                 event:
+ *                   type: object
+ *                   description: "이벤트 객체"
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       description: "이벤트 고유 ID"
+ *                       example: "12345"
+ *                     regDate:
+ *                       type: string
+ *                       description: "이벤트 생성 일시"
+ *                       example: "2025-01-18T10:00:00Z"
+ *                     creatorId:
+ *                       type: string
+ *                       description: "이벤트 생성자 고유 ID"
+ *                       example: "user123@example.com"
+ *                     isCreatorParticipant:
+ *                       type: boolean
+ *                       description: "이벤트 생성자가 참여하는지 여부"
+ *                       example: true
+ *                     status:
+ *                       type: string
+ *                       description: "이벤트 진행 상태"
+ *                       example: "active"
  */
 router.post('/login', async (req, res) => {
     try {
@@ -55,13 +80,20 @@ router.post('/login', async (req, res) => {
             user.regDate = moment().format('YYYY-MM-DD HH:mm:ss');
             await user.save()
         }
-        user.generateToken((err, user) => {
+        await user.generateToken((err, user) => {
             if (err) return res.status(400).send(err)
-            res
-                .cookie('accessToken', user.token)
-                .status(200)
-                .json({ success: true, id: user._id, email: user.email, token: user.token })
         })
+        const event = await Event.findOne({ creatorId: user.email });
+        res
+            .cookie('accessToken', user.token)
+            .status(200)
+            .json({ 
+                success: true, 
+                id: user._id, 
+                email: user.email, 
+                token: user.token,
+                event: event,
+            })
     } catch (err) {
         res.status(500).send(err)
     }
