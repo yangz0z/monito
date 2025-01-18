@@ -12,6 +12,7 @@ import { swaggerUi, specs } from './swagger/swagger.js';
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import eventsRouter from './routes/events.js';
+import cardsRouter from './routes/cards.js';
 
 // dotenv 설정
 dotenv.config();
@@ -32,6 +33,7 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/events', eventsRouter);
+app.use('/api/cards', cardsRouter);
 
 // 5초 타임아웃 설정
 app.use(function(req, res, next) {
