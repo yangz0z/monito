@@ -25,4 +25,4 @@ const EventStatus = {
   }
 };
 
-module.exports = EventStatus;
+export default EventStatus;

@@ -1,1 +1,1 @@
-require('./bin/www')
+import './bin/www.js';

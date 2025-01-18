@@ -1,5 +1,5 @@
-const mongoose = require("mongoose")
-const EventStatus = require('./enums/EventStatus')
+import mongoose from 'mongoose';
+import EventStatus from './enums/EventStatus.js';
 
 const eventSchema = mongoose.Schema({
     regDate: {
@@ -19,8 +19,8 @@ const eventSchema = mongoose.Schema({
         enum: Object.keys(EventStatus),
         default: 'CREATING',
     }
-})
+});
 
-const Event = mongoose.model('Event', eventSchema)
+const Event = mongoose.model('Event', eventSchema);
 
-module.exports = { Event }
+export { Event }; 

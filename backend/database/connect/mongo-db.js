@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose'; 
 
-exports.mongoDB = () => {
+export const mongoDB = () => {
   mongoose
-  .connect(process.env.MONGO_DB)
-  .then(() => console.log("mongodb connected"))
-  .catch((err) => console.log(err));
-}
+    .connect(process.env.MONGO_DB)
+    .then(() => console.log("mongodb connected"))
+    .catch((err) => console.log(err));
+};

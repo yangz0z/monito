@@ -1,8 +1,8 @@
-const { User } = require("../models/User")
+import { User } from "../models/User.js"; 
 
 // 인증 처리
 let auth = (req, res, next) => {
-  let token = req.cookies.accessToken
+  let token = req.cookies.accessToken;
   User.findByToken(token, (err, user) => {
     if (err) {
       console.error('Auth middleware error:', err);
@@ -12,10 +12,10 @@ let auth = (req, res, next) => {
       return res.status(401).json({ isAuth: false, success: false, message: 'Unauthorized' });
     }
 
-    req.token = token
-    req.user = user
-    next()
-  })
-}
+    req.token = token;
+    req.user = user;
+    next();
+  });
+};
 
-module.exports = { auth }
+export { auth }; 

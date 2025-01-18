@@ -1,36 +1,28 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const cors = require('cors');
-require('dotenv').config();
+#!/usr/bin/env node
 
-const { mongoDB } = require("./database/connect/mongo-db");
+import createError from 'http-errors';
+import express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { mongoDB } from './database/connect/mongo-db.js';
+import { swaggerUi, specs } from './swagger/swagger.js';
+import indexRouter from './routes/index.js';
+import usersRouter from './routes/users.js';
+import eventsRouter from './routes/events.js';
+
+// dotenv 설정
+dotenv.config();
+
+// MongoDB 연결
 mongoDB();
-
-const { swaggerUi, specs } = require("./swagger/swagger");
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const eventsRouter = require('./routes/events');
 
 const app = express();
 
-const swaggerOptions = {
-  definition: {
-    openapi: '3.0.0',
-    info: {
-      title: 'MONITO API',
-      version: '1.0.0',
-      description: '모니또 API 명세서',
-    },
-  },
-  apis: ['./routes/**/*.js'],
-};
-
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
-app.use(cors({ origin: process.env.CLIENT_URL })); //클라이언트 도메인 허용
+app.use(cors({ origin: process.env.CLIENT_URL })); // 클라이언트 도메인 허용
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -41,13 +33,13 @@ app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/events', eventsRouter);
 
-//5초 타임아웃 설정
+// 5초 타임아웃 설정
 app.use(function(req, res, next) {
   res.setTimeout(5000, () => {
     console.log('Request timed out.');
-    res.status(408).send('Request timed out')
+    res.status(408).send('Request timed out');
   });
-  next()
+  next();
 });
 
 // error handler
@@ -61,4 +53,4 @@ app.use(function(err, req, res, next) {
   // res.render('error');
 });
 
-module.exports = app;
+export default app;  // `module.exports = app`를 `export default app`으로 변경
