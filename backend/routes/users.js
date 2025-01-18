@@ -103,7 +103,7 @@ router.post('/login', async (req, res) => {
 router.get('/logout', auth, async (req, res) => {
     try {
         const user = await User.findOneAndUpdate(
-            { _id: req.params._id },
+            { _id: req.user._id },
             { token: '' }
         );
         if (!user) {
