@@ -9,16 +9,20 @@ const userSchema = mongoose.Schema({
         type: String,
         trim: true,
         unique: true,
-        lowercase: true
+        lowercase: true,
+        description: '사용자 이메일',
     },
     regDate: {
-        type: String
+        type: String,
+        description: '가입일',
     },
     token: {
-        type: String
+        type: String,
+        description: '토큰',
     },
     tokenExp: {
-        type: Number
+        type: Number,
+        description: '토큰 만료기간',
     }
 });
 
