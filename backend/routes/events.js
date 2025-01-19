@@ -299,6 +299,82 @@ router.delete('/:eventId', auth, async (req, res) => {
     console.error(err);
     res.status(500).json({ success: false, message: 'Server error' });
   }
-})
+});
+
+/**
+ * @openapi
+ * /api/events/{eventId}/shuffle:
+ *   get:
+ *     summary: 마니또 셔플
+ *     description: 마니또 카드를 섞음 
+ *     operationId: manitoShuffle
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - in: cookie
+ *         name: accessToken
+ *         required: true
+ *         description: "쿠키에 저장되어 있는 accessToken값"
+ *         schema:
+ *           type: string
+ *           example: "your-access-token-here"
+ *       - name: eventId
+ *         in: path
+ *         description: "셔플할 이벤트의 ID"
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: 성공
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *     tags:
+ *       - Events
+ */
+router.get('/:eventId/shuffle', auth, async (req, res) => {
+  const { eventId } = req.params;
+  const userId = req.user._id;
+  try {
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ message: '이벤트를 찾을 수 없습니다.' });
+    }
+    if (event.creatorId.toString() !== userId.toString()) {
+      return res.status(403).json({ message: '권한이 없습니다.' });
+    }
+
+    const cards = await Card.find({ eventId: eventId });
+    if (cards.length < 2) {
+      return res.status(400).json({ message: '마니또를 시작하려면 적어도 2개 이상의 카드가 필요합니다.' });
+    }
+
+    const manitoMapping = {};
+    const shuffledCards = shuffle([...cards]);
+
+    shuffledCards.forEach((card, index) => {
+      // 각 카드는 이전 카드의 manito로 설정, 마지막 카드는 첫 번째 카드로 설정
+      const manitoIndex = (index + 1) % shuffledCards.length;
+      manitoMapping[card._id] = shuffledCards[manitoIndex]._id; // manito는 다음 카드
+    });
+
+    for (let card of cards) {
+      card.manitoCardId = manitoMapping[card._id];
+      await card.save();
+    }
+    event.status = 'DRAWING';
+    await event.save();
+
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
 
 export default router;

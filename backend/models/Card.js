@@ -29,6 +29,15 @@ const cardSchema = mongoose.Schema({
         type: String,
         description: '첨언',
     },
+    manitoCardId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Card',
+        description: '이 카드를 뽑을 마니또',
+    },
+    isOpened: {
+        type: Boolean,
+        description: '카드가 오픈되었는지 여부',
+    },
 });
 
 const Card = mongoose.model('Card', cardSchema);
