@@ -15,6 +15,14 @@ const router = express.Router();
  *     operationId: getEventByCreatorId
  *     security:
  *       - cookieAuth: []
+ *     parameters:
+ *       - in: cookie
+ *         name: accessToken
+ *         required: true
+ *         description: "쿠키에 저장되어 있는 accessToken값"
+ *         schema:
+ *           type: string
+ *           example: "your-access-token-here"
  *     responses:
  *       '200':
  *         description: 성공적으로 이벤트를 조회한 경우
@@ -101,6 +109,14 @@ router.get('/', auth, async(req, res) => {
  *     operationId: createEvent
  *     security:
  *       - cookieAuth: []
+ *     parameters:
+ *       - in: cookie
+ *         name: accessToken
+ *         required: true
+ *         description: "쿠키에 저장되어 있는 accessToken값"
+ *         schema:
+ *           type: string
+ *           example: "your-access-token-here"
  *     requestBody:
  *       description: 이벤트 생성에 필요한 정보
  *       required: true
@@ -179,6 +195,13 @@ router.post('/', auth, async (req, res) => {
  *     summary: "이벤트 삭제"
  *     description: "기존 이벤트를 삭제"
  *     parameters:
+ *       - in: cookie
+ *         name: accessToken
+ *         required: true
+ *         description: "쿠키에 저장되어 있는 accessToken값"
+ *         schema:
+ *           type: string
+ *           example: "your-access-token-here"
  *       - name: eventId
  *         in: path
  *         description: "삭제할 이벤트의 ID"

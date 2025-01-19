@@ -81,13 +81,13 @@ router.post('/login', async (req, res) => {
  *       - users
  *     summary: "로그아웃"
  *     parameters:
- *       - name: _id
- *         in: path
- *         description: "사용자 고유 식별값"
+ *       - in: cookie
+ *         name: accessToken
  *         required: true
+ *         description: "쿠키에 저장되어 있는 accessToken값"
  *         schema:
  *           type: string
- *           example: "60a57f9b4f1a2c1abc123456"
+ *           example: "your-access-token-here"
  *     responses:
  *       200:
  *         description: "로그아웃 성공"
@@ -122,6 +122,14 @@ router.get('/logout', auth, async (req, res) => {
  *     tags: 
  *       - users
  *     summary: "인가"
+ *     parameters:
+ *       - in: cookie
+ *         name: accessToken
+ *         required: true
+ *         description: "쿠키에 저장되어 있는 accessToken값"
+ *         schema:
+ *           type: string
+ *           example: "your-access-token-here"
  *     responses:
  *       200:
  *         description: "인가 성공"

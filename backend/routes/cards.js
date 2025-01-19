@@ -15,6 +15,13 @@ const router = express.Router();
  *     security:
  *       - cookieAuth: []
  *     parameters:
+ *       - in: cookie
+ *         name: accessToken
+ *         required: true
+ *         description: "쿠키에 저장되어 있는 accessToken값"
+ *         schema:
+ *           type: string
+ *           example: "your-access-token-here"
  *       - name: eventId
  *         in: query
  *         required: true
@@ -141,6 +148,14 @@ router.get('/', auth, async (req, res) => {
  *     operationId: postCard
  *     security:
  *       - cookieAuth: []
+ *     parameters:
+ *       - in: cookie
+ *         name: accessToken
+ *         required: true
+ *         description: "쿠키에 저장되어 있는 accessToken값"
+ *         schema:
+ *           type: string
+ *           example: "your-access-token-here"
  *     requestBody:
  *       required: true
  *       content:
