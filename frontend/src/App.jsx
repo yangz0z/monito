@@ -1,15 +1,33 @@
 import "./App.css";
 import React from "react";
-import GoogleLoginForm from "./components/GoogleLoginForm";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./routes/home";
 import Profile from "./routes/Profile";
 import Login from "./routes/Login";
-import styled from "styled-components";
-import reset from "styled-reset";
+import CreateEvent from "./routes/Create-Event";
+import DashBoard from "./routes/DashBoard";
+import GoogleLoginForm from "./components/GoogleLoginForm";
 import { createGlobalStyle } from "styled-components";
+import styledReset from "styled-reset";
 
+// Global Styles
+const GlobalStyles = createGlobalStyle`
+  ${styledReset};
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
+    color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+  }
+`;
+
+// Router Configuration
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,35 +41,28 @@ const router = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       },
+      {
+        path: "dashboard",
+        element: <DashBoard />,
+      },
+      {
+        path: "create-event",
+        element: <CreateEvent />,
+      },
     ],
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <GoogleLoginForm />, // GoogleLoginForm을 /login 경로에 렌더링
   },
 ]);
-const GlobalStyles = createGlobalStyle`
-  ${reset};
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
-    color: rgb(75 85 99 / var(--tw-text-opacity, 1));
-  }
-`;
+
+// App Component
 function App() {
   return (
     <>
-      <div>
-        <GlobalStyles />
-        <RouterProvider router={router} />
-        <GoogleLoginForm />
-      </div>
+      <GlobalStyles />
+      <RouterProvider router={router} />
     </>
   );
 }

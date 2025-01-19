@@ -3,12 +3,13 @@ import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import CountDown from "./CountDown";
 import axios from "axios";
 import base64 from "base-64";
+import { useNavigate } from "react-router-dom";
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 const GoogleLoginForm = () => {
   const [user, setUser] = useState(null);
-
+  const navigate = useNavigate();
   const handleSuccess = async (response) => {
     const { credential } = response;
     const payload = credential.substring(
@@ -29,6 +30,7 @@ const GoogleLoginForm = () => {
         name: data.name,
         email: data.email,
       });
+      navigate("/create-event");
     } catch (error) {
       console.error("Error fetching user data:", error);
       alert("사용자 정보를 가져오는 데 문제가 발생했습니다.");
