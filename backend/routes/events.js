@@ -164,9 +164,9 @@ router.post('/', auth, async (req, res) => {
       event,
       { new: true, upsert: true }
     );
-    res.status(200).json({ success: true, eventId: result.id });
+    return res.status(200).json({ success: true, eventId: result.id });
   } catch (err) {
-    res.status(500).json({ success: false, message: '서버에서 오류가 발생했습니다.', error: err.message });
+    return res.status(500).json({ success: false, message: '서버에서 오류가 발생했습니다.', error: err.message });
   }
 });
 

@@ -59,7 +59,7 @@ router.post('/login', async (req, res) => {
         await user.generateToken((err, user) => {
             if (err) return res.status(400).send(err);
         });
-        res
+        return res
             .cookie('accessToken', user.token)
             .status(200)
             .json({ 
@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
                 token: user.token,
             });
     } catch (err) {
-        res.status(500).send(err);
+        return res.status(500).send(err);
     }
 });
 
@@ -143,7 +143,7 @@ router.get('/logout', auth, async (req, res) => {
  *                   example: "user@example.com"
  */
 router.get('/auth', auth, (req, res) => {
-    res.status(200).json({
+    return res.status(200).json({
         _id: req.user._id,
         isAuth: true,
         email: req.user.email

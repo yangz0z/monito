@@ -118,17 +118,122 @@ const router = express.Router();
  *     tags:
  *       - Cards
  */
-router.get('/', auth, async(req, res) => {
+router.get('/', auth, async (req, res) => {
   const { eventId } = req.query;
   try {
     const event = await Event.findById(eventId);
     if (!event) {
-      res.status(404).json({ success: false, message: '조회된 데이터가 없습니다' });
+      return res.status(404).json({ success: false, message: '조회된 데이터가 없습니다' });
     }
     const card = await Card.findOne({ eventId: event._id, userId: req.user._id });
-    res.status(200).json({ success: true, data: {event: event, card: card} });
+    return res.status(200).json({ success: true, data: {event: event, card: card} });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+/**
+ * @openapi
+ * /api/cards:
+ *   post:
+ *     summary: 카드 등록/수정
+ *     description: 사용자의 마니또 카드 등록/수정
+ *     operationId: postCard
+ *     security:
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               eventId:
+ *                 type: string
+ *                 description: 이 카드가 속한 이벤트 ID
+ *                 example: "507f1f77bcf86cd799439011"
+ *               cardId:
+ *                 type: string
+ *                 description: 수정할 카드의 ID. 등록 시 빈값
+ *                 example: "507f1f77bcf86cd799439011"
+ *               title:
+ *                 type: string
+ *                 description: 카드의 칭호
+ *                 example: "마니또"
+ *               name:
+ *                 type: string
+ *                 description: 카드 소유자의 이름
+ *                 example: "홍길동"
+ *               comment:
+ *                 type: string
+ *                 description: 카드에 대한 첨언
+ *                 example: "힘내세요!"
+ *             required:
+ *                - eventId, name
+ *     responses:
+ *       '200':
+ *         description: 성공적으로 이벤트와 카드 정보를 조회한 경우
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     cardId:
+ *                       type: string
+ *                       description: 등록/수정된 카드의 ID
+ *                       example: "507f1f77bcf86cd799439011"
+ *       '404':
+ *         description: 해당 이벤트가 존재하지 않는 경우
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "조회된 이벤트가 없습니다."
+ *       '500':
+ *         description: 서버에서 오류가 발생한 경우
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "서버에서 오류가 발생했습니다."
+ *                 error:
+ *                   type: string
+ *                   example: "Internal server error"
+ *     tags:
+ *       - Cards
+ */
+router.post('/', auth, async (req, res) => {
+  try {
+    const { eventId, cardId } = req.body;
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ success: false, message: '이벤트를 찾을 수 없습니다.' });
+    }
+    let card = new Card(req.body);
+    card.regDate = cardId ? card.regDate : moment().format('YYYY-MM-DD HH:mm:ss');
+    card.userId = req.user._id;
+    const result = await Card.findOneAndUpdate({_id: cardId}, card, { new: true, upsert: true });
+    return res.status(200).json({ success: true, data: { cardId: result._id } });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
   }
 });
 
