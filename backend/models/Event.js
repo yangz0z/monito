@@ -22,6 +22,11 @@ const eventSchema = mongoose.Schema({
         enum: Object.keys(EventStatus),
         default: 'CREATING',
         description: '마니또 이벤트 진행 상태',
+    },
+    isDelete: {
+        type: Boolean,
+        default: false,
+        description: '파티가 삭제되었는지 여부',
     }
 });
 

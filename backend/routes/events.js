@@ -12,7 +12,7 @@ const router = express.Router();
  *   get:
  *     summary: 이벤트 조회
  *     description: 사용자가 생성한 이벤트 정보를 조회
- *     operationId: getEvent
+ *     operationId: getEventByCreatorId
  *     security:
  *       - cookieAuth: []
  *     responses:
@@ -82,7 +82,7 @@ const router = express.Router();
  */
 router.get('/', auth, async(req, res) => {
   try {
-    const result = await Event.findOne({ creatorId: req.user._id });
+    const result = await Event.findOne({ creatorId: req.user._id, isDelete: false });
     const data = !result ? null : {
       ...result.toObject(), status: EventStatus[result.status]
     }
@@ -169,5 +169,113 @@ router.post('/', auth, async (req, res) => {
     return res.status(500).json({ success: false, message: '서버에서 오류가 발생했습니다.', error: err.message });
   }
 });
+
+/**
+ * @openapi
+ * /events/{eventId}:
+ *   delete:
+ *     tags:
+ *       - Events
+ *     summary: "이벤트 삭제"
+ *     description: "기존 이벤트를 삭제"
+ *     parameters:
+ *       - name: eventId
+ *         in: path
+ *         description: "삭제할 이벤트의 ID"
+ *         required: true
+ *         schema:
+ *           type: string
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: "삭제되었습니다."
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: '삭제되었습니다.'
+ *       400:
+ *         description: "잘못된 요청"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: '이벤트를 찾을 수 없습니다.'
+ *       403:
+ *         description: "삭제 권한 없음"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: '삭제 권한이 없습니다.'
+ *       404:
+ *         description: "이벤트를 찾을 수 없음"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: '이벤트를 찾을 수 없습니다.'
+ *       500:
+ *         description: "서버 에러"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: 'Server error'
+ */
+router.delete('/:eventId', auth, async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const userId = req.user._id;
+
+    const event = await Event.findById(eventId);
+    
+    if (!event) {
+      return res.status(404).json({ message: '이벤트를 찾을 수 없습니다.' });
+    }
+    if (event.creatorId.toString() !== userId.toString()) {
+      return res.status(403).json({ message: '삭제 권한이 없습니다.' });
+    }
+
+    event.isDelete = true;
+    await event.save();
+
+    res.status(200).json({ success: true, message: '삭제되었습니다.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+})
 
 export default router;
