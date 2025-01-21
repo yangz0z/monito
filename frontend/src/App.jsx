@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./routes/home";
 import Profile from "./routes/Profile";
+import LiveEvent from "./routes/liveEvent";
 import Login from "./routes/Login";
 import CreateEvent from "./routes/Create-Event";
 import DashBoard from "./routes/DashBoard";
@@ -49,12 +50,17 @@ const router = createBrowserRouter([
         path: "create-event",
         element: <CreateEvent />,
       },
+      {
+        path: "live-event",
+        element: <LiveEvent />,
+      },
+      {
+        path: "/login",
+        element: <GoogleLoginForm />,
+      },
     ],
   },
-  {
-    path: "/login",
-    element: <GoogleLoginForm />, // GoogleLoginForm을 /login 경로에 렌더링
-  },
+  ,
 ]);
 
 // App Component

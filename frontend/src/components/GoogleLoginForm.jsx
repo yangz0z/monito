@@ -47,9 +47,9 @@ const GoogleLoginForm = () => {
         {!user ? (
           <>
             <div>
-              <img src="src/icon_gift.png" alt="Gift Icon" />
+              <img src="/icon_gift.png" alt="Gift Icon" />
             </div>
-            <h1 className="text-4xl text-gray-600 font-medium	mt-2 mb-5">
+            <h1 className="text-4xl text-gray-600 font-medium mt-2 mb-5">
               MONITO
             </h1>
             <p className="text-base text-gray-600 mb-0.5">
