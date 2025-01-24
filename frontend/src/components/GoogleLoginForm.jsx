@@ -30,7 +30,7 @@ const GoogleLoginForm = () => {
         name: data.name,
         email: data.email,
       });
-      navigate("/create-event");
+      navigate("/");
     } catch (error) {
       console.error("Error fetching user data:", error);
       alert("사용자 정보를 가져오는 데 문제가 발생했습니다.");

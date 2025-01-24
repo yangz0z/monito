@@ -1,18 +1,16 @@
 import "./App.css";
-import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./routes/Home";
 import Layout from "./components/Layout";
-import Home from "./routes/home";
 import Profile from "./routes/Profile";
-import LiveEvent from "./routes/liveEvent";
 import Login from "./routes/Login";
+import LiveEvent from "./routes/liveEvent";
+import JoinEvent from "./routes/Join-event";
 import CreateEvent from "./routes/Create-Event";
-import DashBoard from "./routes/DashBoard";
-import GoogleLoginForm from "./components/GoogleLoginForm";
+import DashBoard from "./routes/dash-board";
 import { createGlobalStyle } from "styled-components";
 import styledReset from "styled-reset";
 
-// Global Styles
 const GlobalStyles = createGlobalStyle`
   ${styledReset};
   * {
@@ -28,7 +26,6 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-// Router Configuration
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,7 +40,7 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: "dashboard",
+        path: "dash-board",
         element: <DashBoard />,
       },
       {
@@ -55,15 +52,17 @@ const router = createBrowserRouter([
         element: <LiveEvent />,
       },
       {
+        path: "join-event",
+        element: <JoinEvent />,
+      },
+      {
         path: "/login",
-        element: <GoogleLoginForm />,
+        element: <Login />,
       },
     ],
   },
-  ,
 ]);
 
-// App Component
 function App() {
   return (
     <>

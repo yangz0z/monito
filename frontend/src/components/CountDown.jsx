@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const CountDown = () => {
-  const targetDate = new Date("2026-01-01T00:00:00"); // 카운트다운 목표 날짜
+  const targetDate = new Date("2026-01-01T00:00:00");
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   function calculateTimeLeft() {
@@ -34,7 +34,7 @@ const CountDown = () => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
-    return () => clearInterval(timer); // 컴포넌트가 언마운트될 때 타이머 정리
+    return () => clearInterval(timer);
   }, []);
 
   return (
