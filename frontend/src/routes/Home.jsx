@@ -31,17 +31,22 @@ export default function Home() {
       <div>
         <img src="/icon_gift.png" alt="Gift Icon" />
       </div>
-      <h1 className="text-4xl text-gray-600 font-medium mt-2 mb-5">MONITO</h1>
-      <p className="text-base text-gray-600 mb-0.5">
+      <h1 className="text-4xl text-gray-600 font-semibold mt-2 mb-5">MONITO</h1>
+      <p className="text-base text-gray-600 mb-0.5 font-semibold">
         모두를 위한 마니또 MONITO에 오신 것을
       </p>
-      <p className="text-base text-gray-600 text-center mb-5">환영합니다.</p>
+      <p className="text-base text-gray-600 text-center mb-5 font-semibold">
+        환영합니다.
+      </p>
       <CountDown />
       <button
         onClick={handleCreateEventClick}
-        className="mt-1 text-sm bg-white text-gray-650 px-12 py-2 rounded shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="mt-1 text-base font-semibold bg-[#D32F2F] text-white px-10 py-2 rounded-full shadow-xl hover:bg-red-700 "
       >
-        <span className="font-semibold text-gray-600">MONITO</span> 시작하기
+        <span className="flex space-x-3 ">
+          <span>MONITO</span>
+          <span>시작하기</span>
+        </span>
       </button>
 
       {/* 첫 번째 모달 */}
@@ -60,13 +65,13 @@ export default function Home() {
             <div className="flex flex-col gap-4">
               <button
                 onClick={() => handleOptionClick("create")}
-                className="px-4 py-3 bg-gray-400 text-white rounded-md hover:bg-blue-600 transition duration-300"
+                className="px-4 py-3 bg-gray-400 text-white rounded-full hover:bg-red-700  shadow-xl transition duration-400 font-semibold"
               >
                 새 이벤트 만들기
               </button>
               <button
                 onClick={() => handleOptionClick("join")}
-                className="px-4 py-3 bg-gray-400 text-white rounded-md hover:bg-blue-600 transition duration-300"
+                className="px-4 py-3 bg-gray-400 text-white rounded-full hover:bg-red-700 shadow-xl transition duration-400 font-semibold"
               >
                 초대코드로 참여하기
               </button>
@@ -91,13 +96,13 @@ export default function Home() {
             <div className="flex flex-col gap-4">
               <button
                 onClick={() => handleSecondModalOptionClick("/create-event")}
-                className="px-4 py-3 bg-gray-400 text-white rounded-md hover:bg-blue-600 transition duration-300"
+                className="px-4 py-3 bg-gray-400 text-white rounded-full  shadow-xl hover:bg-red-700 transition duration-400 font-semibold"
               >
                 문자 / 카카오톡으로 알림 보내기
               </button>
               <button
                 onClick={() => handleSecondModalOptionClick("/live-event")}
-                className="px-4 py-3 bg-gray-400 text-white rounded-md hover:bg-blue-600 transition duration-300"
+                className="px-4 py-3 bg-gray-400 text-white rounded-full shadow-xl hover:bg-red-700 transition duration-400 font-semibold"
               >
                 라이브로 진행하기
               </button>

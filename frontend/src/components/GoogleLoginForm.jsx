@@ -49,13 +49,13 @@ const GoogleLoginForm = () => {
             <div>
               <img src="/icon_gift.png" alt="Gift Icon" />
             </div>
-            <h1 className="text-4xl text-gray-600 font-medium mt-2 mb-5">
+            <h1 className="text-4xl text-gray-600 font-medium mt-2 mb-5 font-semibold">
               MONITO
             </h1>
-            <p className="text-base text-gray-600 mb-0.5">
+            <p className="text-base text-gray-600 mb-0.5 font-semibold">
               모두를 위한 마니또 MONITO에 오신 것을
             </p>
-            <p className="text-base text-gray-600 text-center mb-5">
+            <p className="text-base text-gray-600 text-center mb-5 font-semibold">
               환영합니다.
             </p>
             <CountDown />

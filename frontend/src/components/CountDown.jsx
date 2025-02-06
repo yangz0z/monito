@@ -39,15 +39,17 @@ const CountDown = () => {
 
   return (
     <div className=" text-gray-600 mb-4">
-      <h1 className="text-center text-sm mb-1.5 ">2025년 카운트다운</h1>
+      <h1 className="text-center text-sm mb-1.5 font-semibold">
+        2025년 카운트다운
+      </h1>
       <div>
-        <div className="text-center text-sm space-x-3">
+        <div className="text-center text-sm space-x-3 font-semibold">
           <span>{timeLeft.days}</span>
           <span>{timeLeft.hours}</span>
           <span>{timeLeft.minutes}</span>
           <span>{timeLeft.seconds}</span>
         </div>
-        <div className="text-center text-xs space-x-4">
+        <div className="mt-2 text-center text-xs space-x-4 font-semibold">
           <span>일</span>
           <span>시간</span>
           <span>분</span>

@@ -27,8 +27,12 @@ export default function LiveEvent() {
       <div>
         <img src="/icon_gift.png" alt="Gift Icon" />
       </div>
-      <h1 className="text-4xl text-gray-600 font-medium mt-2 mb-5">MONITO</h1>
-      <p className="text-base text-gray-600 mb-5">참가자 추가하기</p>
+      <h1 className="text-4xl text-gray-600 font-medium mt-2 mb-5 font-semibold">
+        MONITO
+      </h1>
+      <p className="text-base text-gray-600 mb-5 font-semibold">
+        참가자 추가하기
+      </p>
 
       <form onSubmit={handleAddParticipant} className="mt-4">
         <input
@@ -40,7 +44,7 @@ export default function LiveEvent() {
         />
         <span>
           <button type="submit">
-            <div className="ml-2 h-8 w-8 text-xl font-bold bg-blue-500 text-white rounded-full hover:bg-blue-600">
+            <div className="ml-2 h-8 w-8 text-xl font-bold bg-[#FF8F00] text-white rounded-full hover:bg-orange-500">
               +
             </div>
           </button>
@@ -65,7 +69,7 @@ export default function LiveEvent() {
 
       <button
         onClick={handleNext}
-        className=" mt-5 px-6 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
+        className=" mt-5 px-6 py-2  font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700"
       >
         다음
       </button>
