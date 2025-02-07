@@ -38,22 +38,26 @@ const CountDown = () => {
   }, []);
 
   return (
-    <div className=" text-gray-600 mb-4">
+    <div className="text-gray-600 mb-4">
       <h1 className="text-center text-sm mb-1.5 font-semibold">
         2025년 카운트다운
       </h1>
-      <div>
-        <div className="text-center text-sm space-x-3 font-semibold">
-          <span>{timeLeft.days}</span>
-          <span>{timeLeft.hours}</span>
-          <span>{timeLeft.minutes}</span>
-          <span>{timeLeft.seconds}</span>
+      <div className="flex justify-center space-x-4">
+        <div className="flex flex-col items-center">
+          <span className="text-sm mb-1 font-semibold">{timeLeft.days}</span>
+          <span className="text-xs font-semibold">일</span>
         </div>
-        <div className="mt-2 text-center text-xs space-x-4 font-semibold">
-          <span>일</span>
-          <span>시간</span>
-          <span>분</span>
-          <span>초</span>
+        <div className="flex flex-col items-center">
+          <span className="text-sm mb-1 font-semibold">{timeLeft.hours}</span>
+          <span className="text-xs font-semibold">시간</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="text-sm mb-1 font-semibold">{timeLeft.minutes}</span>
+          <span className="text-xs font-semibold">분</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="text-sm mb-1 font-semibold">{timeLeft.seconds}</span>
+          <span className="text-xs font-semibold">초</span>
         </div>
       </div>
     </div>

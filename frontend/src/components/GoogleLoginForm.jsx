@@ -6,10 +6,12 @@ import base64 from "base-64";
 import { useNavigate } from "react-router-dom";
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+const API_BASE_URL = "https://monito-api-blue.vercel.app";
 
 const GoogleLoginForm = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
   const handleSuccess = async (response) => {
     const { credential } = response;
     const payload = credential.substring(
@@ -17,18 +19,15 @@ const GoogleLoginForm = () => {
       credential.lastIndexOf(".")
     );
     const dec = base64.decode(payload);
-    const { email, name } = JSON.parse(dec);
+    const { email } = JSON.parse(dec);
     try {
       // 백엔드로 GET 요청 보내기;
-      const { data } = await axios.post(
-        "https://monito-api-blue.vercel.app/api/users/login",
-        { email, name }
-      );
-
+      const { data } = await axios.post(`${API_BASE_URL}/api/users/login`, {
+        email,
+      });
       // 응답 데이터로 사용자 정보 설정
       setUser({
-        name: data.name,
-        email: data.email,
+        email: data.email || "이메일 없음",
       });
       navigate("/");
     } catch (error) {
