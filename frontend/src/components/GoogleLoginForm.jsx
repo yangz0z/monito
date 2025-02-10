@@ -10,9 +10,12 @@ const API_BASE_URL = "https://monito-api-blue.vercel.app";
 
 const GoogleLoginForm = () => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false); // ✅ 로딩 상태 추가
   const navigate = useNavigate();
 
   const handleSuccess = async (response) => {
+    setLoading(true); // ✅ 로그인 버튼 클릭 후 로딩 시작
+
     const { credential } = response;
     const payload = credential.substring(
       credential.indexOf(".") + 1,
@@ -31,7 +34,7 @@ const GoogleLoginForm = () => {
 
       //  localStorage 업데이트 & 상태 즉시 반영
       localStorage.setItem("user", JSON.stringify(userData));
-      setUser(userData); //상태 즉시 업데이트
+      setUser(userData);
 
       //  storage 이벤트 발생 → Layout.jsx에서 로그인 상태 변경 감지 가능
       window.dispatchEvent(new Event("storage"));
@@ -40,11 +43,14 @@ const GoogleLoginForm = () => {
     } catch (error) {
       console.error("Error fetching user data:", error);
       alert("사용자 정보를 가져오는 데 문제가 발생했습니다.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleError = () => {
     console.error("Login failed");
+    setLoading(false);
   };
 
   return (
@@ -65,17 +71,23 @@ const GoogleLoginForm = () => {
               환영합니다.
             </p>
             <CountDown />
-            <GoogleLogin
-              onSuccess={handleSuccess}
-              onError={handleError}
-              text="signin_with"
-              width="300px"
-            />
+
+            {loading ? (
+              <p className="text-lg font-semibold text-gray-600 mt-3">
+                🚀 Loading...
+              </p>
+            ) : (
+              <GoogleLogin
+                onSuccess={handleSuccess}
+                onError={handleError}
+                text="signin_with"
+                width="300px"
+              />
+            )}
           </>
         ) : (
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Welcome, {user.name}!</h2>
-            <p className="text-lg">Email: {user.email}</p>
+            <h2 className="text-2xl font-bold mb-4">Welcome, {user.email}!</h2>
           </div>
         )}
       </div>

@@ -8,6 +8,7 @@ import LiveEvent from "./routes/liveEvent";
 import JoinEvent from "./routes/Join-event";
 import CreateEvent from "./routes/Create-Event";
 import DashBoard from "./routes/dash-board";
+import ProtectedRoute from "./components/ProtectedRoute"; // ✅ 보호된 라우트 추가
 import { createGlobalStyle } from "styled-components";
 import styledReset from "styled-reset";
 
@@ -29,37 +30,43 @@ const GlobalStyles = createGlobalStyle`
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <ProtectedRoute />, //  보호된 라우트 추가 (로그인 필요)
     children: [
       {
         path: "",
-        element: <Home />,
-      },
-      {
-        path: "profile",
-        element: <Profile />,
-      },
-      {
-        path: "dash-board",
-        element: <DashBoard />,
-      },
-      {
-        path: "create-event",
-        element: <CreateEvent />,
-      },
-      {
-        path: "live-event",
-        element: <LiveEvent />,
-      },
-      {
-        path: "join-event",
-        element: <JoinEvent />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
+        element: <Layout />, //  Layout 내부에서 Outlet 사용
+        children: [
+          {
+            path: "",
+            element: <Home />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+          {
+            path: "dash-board",
+            element: <DashBoard />,
+          },
+          {
+            path: "create-event",
+            element: <CreateEvent />,
+          },
+          {
+            path: "live-event",
+            element: <LiveEvent />,
+          },
+          {
+            path: "join-event",
+            element: <JoinEvent />,
+          },
+        ],
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 

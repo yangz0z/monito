@@ -24,12 +24,6 @@ export default function Layout() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!localStorage.getItem("user")) {
-      navigate("/login");
-    }
-  }, [user, navigate]); //  user 상태 변경 감지
-
   // ✅ 로그아웃 시 상태 업데이트
   const handleLogout = () => {
     localStorage.removeItem("user");
