@@ -20,15 +20,22 @@ const GoogleLoginForm = () => {
     );
     const dec = base64.decode(payload);
     const { email } = JSON.parse(dec);
+
     try {
-      // 백엔드로 GET 요청 보내기;
+      // 백엔드로 로그인 요청
       const { data } = await axios.post(`${API_BASE_URL}/api/users/login`, {
         email,
       });
-      // 응답 데이터로 사용자 정보 설정
-      setUser({
-        email: data.email || "이메일 없음",
-      });
+
+      const userData = { email: data.email || "이메일 없음" };
+
+      //  localStorage 업데이트 & 상태 즉시 반영
+      localStorage.setItem("user", JSON.stringify(userData));
+      setUser(userData); //상태 즉시 업데이트
+
+      //  storage 이벤트 발생 → Layout.jsx에서 로그인 상태 변경 감지 가능
+      window.dispatchEvent(new Event("storage"));
+
       navigate("/");
     } catch (error) {
       console.error("Error fetching user data:", error);
