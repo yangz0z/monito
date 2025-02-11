@@ -85,11 +85,7 @@ const GoogleLoginForm = () => {
               />
             )}
           </>
-        ) : (
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Welcome, {user.email}!</h2>
-          </div>
-        )}
+        ) : null}
       </div>
     </GoogleOAuthProvider>
   );

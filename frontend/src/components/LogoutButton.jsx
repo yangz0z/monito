@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const LogoutButton = ({ onLogout }) => {
-  // ✅ props로 onLogout 받기
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -18,9 +18,13 @@ const LogoutButton = ({ onLogout }) => {
       onClick={handleLogout}
       className="bg-[#D32F2F] font-semibold text-white hover:bg-red-700 px-4 py-2 rounded-full"
     >
-      로그아웃
+      Logout
     </button>
   );
+};
+
+LogoutButton.propTypes = {
+  onLogout: PropTypes.func.isRequired,
 };
 
 export default LogoutButton;
