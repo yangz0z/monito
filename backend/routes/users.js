@@ -1,8 +1,8 @@
-import express from 'express';
-import moment from 'moment';
-import { User } from '../models/User.js';
-import { Event } from '../models/Event.js';
-import { auth } from '../middleware/auth.js';
+import express from "express";
+import moment from "moment";
+import { User } from "../models/User.js";
+import { Event } from "../models/Event.js";
+import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ const router = express.Router();
  * @openapi
  * /api/users/login:
  *   post:
- *     tags: 
+ *     tags:
  *       - users
  *     summary: "로그인"
  *     requestBody:
@@ -48,36 +48,33 @@ const router = express.Router();
  *                   description: "JWT 토큰값"
  *                   example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
  */
-router.post('/login', async (req, res) => {
-    try {
-        let user = await User.findOne({ email: req.body.email });
-        if (!user) {
-            user = new User(req.body);
-            user.regDate = moment().format('YYYY-MM-DD HH:mm:ss');
-            await user.save();
-        }
-        await user.generateToken((err, user) => {
-            if (err) return res.status(400).send(err);
-        });
-        return res
-            .cookie('accessToken', user.token)
-            .status(200)
-            .json({ 
-                success: true, 
-                id: user._id, 
-                email: user.email, 
-                token: user.token,
-            });
-    } catch (err) {
-        return res.status(500).send(err);
+router.post("/login", async (req, res) => {
+  try {
+    let user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      user = new User(req.body);
+      user.regDate = moment().format("YYYY-MM-DD HH:mm:ss");
+      await user.save();
     }
+    await user.generateToken((err, user) => {
+      if (err) return res.status(400).send(err);
+    });
+    return res.cookie("accessToken", user.token).status(200).json({
+      success: true,
+      id: user._id,
+      email: user.email,
+      token: user.token,
+    });
+  } catch (err) {
+    return res.status(500).send(err);
+  }
 });
 
 /**
  * @openapi
  * /api/users/logout:
  *   get:
- *     tags: 
+ *     tags:
  *       - users
  *     summary: "로그아웃"
  *     parameters:
@@ -100,26 +97,28 @@ router.post('/login', async (req, res) => {
  *                   type: boolean
  *                   example: true
  */
-router.get('/logout', auth, async (req, res) => {
-    try {
-        const user = await User.findOneAndUpdate(
-            { _id: req.user._id },
-            { token: '' }
-        );
-        if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found' });
-        }
-        return res.status(200).json({ success: true });
-    } catch (err) {
-        return res.status(500).json({ success: false, message: 'Server error' });
+router.get("/logout", auth, async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { token: "" }
+    );
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
     }
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
 });
 
 /**
  * @openapi
  * /api/users/auth:
  *   get:
- *     tags: 
+ *     tags:
  *       - users
  *     summary: "인가"
  *     parameters:
@@ -150,12 +149,12 @@ router.get('/logout', auth, async (req, res) => {
  *                   description: "사용자 이메일"
  *                   example: "user@example.com"
  */
-router.get('/auth', auth, (req, res) => {
-    return res.status(200).json({
-        _id: req.user._id,
-        isAuth: true,
-        email: req.user.email
-    });
+router.get("/auth", auth, (req, res) => {
+  return res.status(200).json({
+    _id: req.user._id,
+    isAuth: true,
+    email: req.user.email,
+  });
 });
 
 export default router;
