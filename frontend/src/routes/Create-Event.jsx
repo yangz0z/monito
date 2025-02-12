@@ -22,7 +22,7 @@ export default function CreateEvent() {
   };
 
   return (
-    <div className="mt-1 flex flex-col items-center justify-center h-screen bg-gray-100 relative">
+    <div className="mt-1 flex flex-col items-center justify-start h-screen bg-gray-100 relative pt-60">
       <div>
         <img src="/icon_gift.png" alt="Gift Icon" />
       </div>
@@ -39,7 +39,7 @@ export default function CreateEvent() {
           placeholder="이벤트 이름"
           value={eventName}
           onChange={(e) => setEventName(e.target.value)}
-          className={`border rounded-md px-6 py-1.5 text-gray-700 w-full ${
+          className={`border rounded-md pl-2 px-6 py-1.5 text-gray-700 w-full ${
             errors.eventName ? "border-red-500" : ""
           }`}
           required
@@ -55,7 +55,7 @@ export default function CreateEvent() {
           placeholder="예산"
           value={budget}
           onChange={(e) => setBudget(e.target.value)}
-          className={`border rounded-md px-6 py-1.5 text-gray-700 w-full ${
+          className={`border rounded-md pl-2 px-6 py-1.5  text-gray-700 w-full ${
             errors.budget ? "border-red-500" : ""
           }`}
           required

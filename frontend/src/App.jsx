@@ -6,7 +6,7 @@ import Profile from "./routes/Profile";
 import Login from "./routes/Login";
 import LiveEvent from "./routes/liveEvent";
 import JoinEvent from "./routes/Join-event";
-import CreateEvent from "./routes/Create-Event";
+import CreateEvent from "./routes/create-event";
 import DashBoard from "./routes/dash-board";
 import ProtectedRoute from "./components/ProtectedRoute"; // ✅ 보호된 라우트 추가
 import { createGlobalStyle } from "styled-components";

@@ -27,7 +27,10 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+    <div
+      className="flex flex-col items-center justify-start h-screen pt-60"
+      onClick={() => document.activeElement.blur()} // ✅ 빈 공간 클릭 시 포커스 해제
+    >
       <div>
         <img src="/icon_gift.png" alt="Gift Icon" />
       </div>
