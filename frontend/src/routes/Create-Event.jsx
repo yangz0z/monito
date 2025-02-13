@@ -78,7 +78,7 @@ export default function CreateEvent() {
 
       <button
         onClick={handleSubmit}
-        className="mt-9 px-6 py-2 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-700 font-semibold"
+        className="mt-9 px-8 py-3 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-700 font-semibold"
       >
         다음
       </button>

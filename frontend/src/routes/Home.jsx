@@ -44,7 +44,7 @@ export default function Home() {
       <CountDown />
       <button
         onClick={handleCreateEventClick}
-        className="mt-1 text-base font-semibold bg-[#D32F2F] text-white px-10 py-2 rounded-full shadow-xl hover:bg-red-700 "
+        className="mt-1 text-base font-semibold bg-[#D32F2F] text-white px-10 py-2.5 rounded-full shadow-xl hover:bg-red-700 "
       >
         <span className="flex space-x-3 ">
           <span>MONITO</span>

@@ -47,7 +47,7 @@ export default function LiveEvent() {
       );
       return;
     }
-    navigate("/next-page");
+    navigate("/live-event/draw-result", { state: { participants } });
   };
 
   return (
@@ -89,7 +89,7 @@ export default function LiveEvent() {
         <p className="text-red-500 text-sm font-semibold mt-2">{error}</p>
       )}
 
-      <ul className="mt-5 w-64">
+      <ul className="mt-5 w-64 max-h-60 overflow-y-auto">
         {participants.map((participant, index) => (
           <li
             key={index}
@@ -107,7 +107,7 @@ export default function LiveEvent() {
 
       <button
         onClick={handleNext}
-        className=" mt-5 px-6 py-2  font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700"
+        className=" mt-5 px-8 py-3  font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700"
       >
         다음
       </button>
