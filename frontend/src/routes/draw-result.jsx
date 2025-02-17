@@ -73,25 +73,32 @@ export default function DrawResult() {
             <img
               src="/icon_gift.png"
               alt="Gift Icon"
-              className="mt-2 mb-2== animate-bounce"
+              className="mt-2 mb-2 animate-bounce"
             />
-            <p className="text-lg font-semibold text-gray-600 animate-fadeIn">
+
+            {/* fade-in 애니메이션 적용 */}
+            <p
+              className="text-lg font-semibold text-gray-600 transition-opacity duration-1000 opacity-0 animate-fadeIn"
+              key={currentIndex} // currentIndex 변경 시마다 애니메이션 실행
+            >
               이(가) 선물을 줄 사람은
             </p>
 
-            <p className={"text-2xl text-gray-600 font-bold mt-2"}>
+            {/* 선물 받을 사람 이름 */}
+            <p className="text-2xl text-gray-600 font-bold mt-2">
               {randomName}
             </p>
           </div>
 
-          {/* 다음 버튼 */}
-          <button
-            onClick={handleNext}
-            className=" mt-5 px-8 py-3  font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700"
-            disabled={isShuffling} // 애니메이션이 진행 중일 때 버튼 비활성화
-          >
-            {currentIndex === result.length - 1 ? "결과 보기" : "다음"}
-          </button>
+          {/* 다음 버튼 (애니메이션이 진행 중일 때만 숨김) */}
+          {!isShuffling && (
+            <button
+              onClick={handleNext}
+              className="mt-5 px-8 py-3 font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700 transition-opacity duration-500"
+            >
+              {currentIndex === result.length - 1 ? "결과 보기" : "다음"}
+            </button>
+          )}
         </>
       ) : (
         <>
@@ -100,14 +107,15 @@ export default function DrawResult() {
             {result.map(({ giver, receiver }, index) => (
               <li key={index} className="flex justify-between p-2 border-b">
                 <span className="font-semibold">{giver}</span>
-                <span className="text-gray-500">→</span>
+                <span className="text-gray-600 font-semibold">→</span>
                 <span className="font-semibold">{receiver}</span>
               </li>
             ))}
           </ul>
+          {/* 최종 결과 화면에서는 항상 버튼 표시 */}
           <button
             onClick={() => navigate("/")}
-            className=" mt-5 px-8 py-3  font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700"
+            className="mt-5 px-8 py-3 font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700"
           >
             홈으로 돌아가기
           </button>
