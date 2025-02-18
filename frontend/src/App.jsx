@@ -6,9 +6,10 @@ import Profile from "./routes/Profile";
 import Login from "./routes/Login";
 import LiveEvent from "./routes/LiveEvent";
 import DrawResult from "./routes/draw-result";
-import JoinEvent from "./routes/Join-event";
+import JoinEvent from "./routes/join-event";
 import CreateEvent from "./routes/create-event";
 import DashBoard from "./routes/dash-board";
+import Participant from "./routes/Participant";
 import ProtectedRoute from "./components/ProtectedRoute"; //  보호된 라우트 추가
 import { createGlobalStyle } from "styled-components";
 import styledReset from "styled-reset";
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
           {
             path: "live-event/draw-result",
             element: <DrawResult />,
+          },
+          {
+            path: "create-event/participant",
+            element: <Participant />,
           },
         ],
       },

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateEvent() {
   const [eventName, setEventName] = useState("");
   const [budget, setBudget] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [errors, setErrors] = useState({ eventName: false, budget: false });
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     let newErrors = { eventName: false, budget: false };
@@ -17,7 +19,7 @@ export default function CreateEvent() {
     setErrors(newErrors);
 
     if (!newErrors.eventName && !newErrors.budget) {
-      alert("이벤트 생성 완료!");
+      navigate("/create-event/participant");
     }
   };
 
@@ -49,7 +51,7 @@ export default function CreateEvent() {
         )}
       </div>
 
-      <div className="w-64 mt-3">
+      <div className="w-64 mt-2">
         <input
           type="text"
           placeholder="예산"
@@ -64,7 +66,7 @@ export default function CreateEvent() {
           <p className="text-red-500 text-xs mt-1">필수 입력 항목입니다.</p>
         )}
       </div>
-      <div className="mt-3 flex items-center justify-between w-64 ">
+      <div className="mt-2 flex items-center justify-between w-64 ">
         <span className="text-sm font-semibold">이벤트 날짜</span>
         <DatePicker
           selected={selectedDate}
