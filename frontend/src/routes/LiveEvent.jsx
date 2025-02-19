@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaPlusCircle, FaTimesCircle } from "react-icons/fa";
 
 export default function LiveEvent() {
   const [participants, setParticipants] = useState([]);
@@ -64,12 +65,12 @@ export default function LiveEvent() {
 
       <form
         onSubmit={handleAddParticipant}
-        className="mt-4 flex items-center space-x-2"
+        className="mt-4  flex items-center space-x-2"
       >
         <input
           type="text"
           placeholder="이름"
-          className={`border rounded-md px-6 py-1.5 text-gray-700 w-64 ${
+          className={`border shadow rounded-md px-6 py-1.5 text-gray-700 w-52 ${
             error ? "border-red-500" : ""
           }`}
           value={inputValue}
@@ -79,9 +80,7 @@ export default function LiveEvent() {
           }}
         />
         <button type="submit" className="ml-2">
-          <div className="h-8 w-8 flex items-center justify-center text-xl font-bold bg-[#FF8F00] text-white rounded-full hover:bg-orange-500">
-            +
-          </div>
+          <FaPlusCircle className="text-3xl text-[#FF8F00]" />
         </button>
       </form>
 
@@ -97,9 +96,7 @@ export default function LiveEvent() {
           >
             <span>{participant}</span>
             <button onClick={() => handleDeleteParticipant(index)}>
-              <div className="ml-2 h-6 w-6 bg-red-500 text-white rounded-full hover:bg-red-600">
-                x
-              </div>
+              <FaTimesCircle className="text-red-500 text-xl" />
             </button>
           </li>
         ))}

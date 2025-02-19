@@ -41,7 +41,7 @@ export default function CreateEvent() {
           placeholder="이벤트 이름"
           value={eventName}
           onChange={(e) => setEventName(e.target.value)}
-          className={`border rounded-md pl-2 px-6 py-1.5 text-gray-700 w-full ${
+          className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-full ${
             errors.eventName ? "border-red-500" : ""
           }`}
           required
@@ -57,7 +57,7 @@ export default function CreateEvent() {
           placeholder="예산"
           value={budget}
           onChange={(e) => setBudget(e.target.value)}
-          className={`border rounded-md pl-2 px-6 py-1.5  text-gray-700 w-full ${
+          className={`border shadow rounded-md pl-2 px-6 py-1.5  text-gray-700 w-full ${
             errors.budget ? "border-red-500" : ""
           }`}
           required
@@ -72,7 +72,7 @@ export default function CreateEvent() {
           selected={selectedDate}
           onChange={(date) => setSelectedDate(date)}
           dateFormat="yyyy-MM-dd"
-          className="border rounded-md w-24 py-1.5 text-gray-700 text-center text-sm font-semibold"
+          className="border shadow rounded-md w-24 py-1.5 text-gray-700 text-center text-sm font-semibold"
           popperPlacement="bottom-start"
           portalId="root-portal"
         />
