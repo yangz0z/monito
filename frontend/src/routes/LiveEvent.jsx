@@ -65,12 +65,12 @@ export default function LiveEvent() {
 
       <form
         onSubmit={handleAddParticipant}
-        className="mt-4  flex items-center space-x-2"
+        className="mt-4 ml-2 flex items-center space-x-2"
       >
         <input
           type="text"
           placeholder="이름"
-          className={`border shadow rounded-md px-6 py-1.5 text-gray-700 w-52 ${
+          className={`border shadow pl-2 rounded-md px-6 py-1.5 text-gray-700 w-52 ${
             error ? "border-red-500" : ""
           }`}
           value={inputValue}
@@ -88,7 +88,7 @@ export default function LiveEvent() {
         <p className="text-red-500 text-sm font-semibold mt-2">{error}</p>
       )}
 
-      <ul className="mt-5 w-64 max-h-60 overflow-y-auto">
+      <ul className="mt-5 w-64 ml-2 max-h-60 overflow-y-auto">
         {participants.map((participant, index) => (
           <li
             key={index}

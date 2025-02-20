@@ -21,7 +21,7 @@ export default function MonitoCard() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-5">
-      <h1 className="text-2xl font-semibold text-gray-700 mb-4">
+      <h1 className="text-2xl font-semibold text-gray-600 mb-4">
         마니또 카드 만들기
       </h1>
 
@@ -50,7 +50,7 @@ export default function MonitoCard() {
         />
 
         {/* 카드 색상 선택 */}
-        <label className="text-gray-600">배경색 선택:</label>
+        <label className="text-gray-600 ">배경색 선택</label>
         <input
           type="color"
           value={bgColor}
@@ -69,7 +69,7 @@ export default function MonitoCard() {
           {nickname || "닉네임"}
         </h2>
         <p className="text-white mt-2">{bio || "한 줄 소개를 입력하세요"}</p>
-        <span className="bg-white text-gray-700 px-3 py-1 rounded-full mt-3">
+        <span className="bg-white text-gray-600 px-3 py-1 rounded-full mt-3">
           {interest || "관심사"}
         </span>
       </div>
@@ -78,7 +78,7 @@ export default function MonitoCard() {
       <div className="mt-6 space-x-4">
         <button
           onClick={handleSaveCard}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600"
+          className="mt-9 px-8 py-3 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-600 font-semibold"
         >
           카드 저장
         </button>

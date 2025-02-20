@@ -23,7 +23,7 @@ export default function Participant() {
       return;
     }
 
-    navigate("/next-page"); // 예제 URL
+    navigate("/cards");
   };
 
   const handleSubmit = (e) => {
@@ -111,7 +111,7 @@ export default function Participant() {
 
       <button
         onClick={handleNext}
-        className="mt-9 px-8 py-3 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-700 font-semibold"
+        className="mt-16 px-8 py-3 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-700 font-semibold"
       >
         다음
       </button>

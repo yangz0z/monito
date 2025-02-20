@@ -28,9 +28,7 @@ export default function CreateEvent() {
       <div>
         <img src="/icon_gift.png" alt="Gift Icon" />
       </div>
-      <h1 className="text-4xl text-gray-600 font-medium mt-2 mb-5 font-semibold">
-        MONITO
-      </h1>
+      <h1 className="text-4xl text-gray-600 mt-2 mb-5 font-semibold">MONITO</h1>
       <p className="text-base text-gray-600 mb-5 font-semibold">
         이벤트 만들기
       </p>
