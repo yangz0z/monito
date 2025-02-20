@@ -8,26 +8,37 @@ export default function Participant() {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [errors, setErrors] = useState({ name: false, contact: false });
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleNext = () => {
-    let newErrors = { eventName: false, budget: false };
+    setErrorMessage("");
 
-    if (!name.trim()) newErrors.name = true;
-    if (!contact.trim()) newErrors.contact = true;
+    if (participants.length === 0) {
+      setErrors({ name: !name.trim(), contact: !contact.trim() });
+      return;
+    }
 
-    setErrors(newErrors);
+    if (participants.length < 3) {
+      setErrorMessage("참가자는 최소 3명 이상이어야 합니다.");
+      return;
+    }
+
+    navigate("/next-page"); // 예제 URL
   };
 
-  // 참가자 추가 (submit 이벤트 핸들러)
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name && contact) {
+    if (name.trim() && contact.trim()) {
       setParticipants([...participants, { name, contact }]);
       setName("");
       setContact("");
+      setErrors({ name: false, contact: false });
+      setErrorMessage("");
+    } else {
+      setErrors({ name: !name.trim(), contact: !contact.trim() });
     }
   };
-  // 참가자 삭제
+
   const handleRemoveParticipant = (index) => {
     setParticipants(participants.filter((_, i) => i !== index));
   };
@@ -44,9 +55,7 @@ export default function Participant() {
         참가자 추가하기
       </p>
 
-      {/* 참가자 추가 Form */}
       <form onSubmit={handleSubmit} className="ml-10">
-        {/* 이름 입력 */}
         <div>
           <input
             type="text"
@@ -62,8 +71,7 @@ export default function Participant() {
           )}
         </div>
 
-        {/* 이메일 또는 휴대폰 번호 입력 */}
-        <div className="mt-1  flex items-center space-x-2">
+        <div className="mt-1 flex items-center space-x-2">
           <input
             type="text"
             placeholder="이메일 또는 휴대폰 번호"
@@ -71,8 +79,6 @@ export default function Participant() {
             value={contact}
             onChange={(e) => setContact(e.target.value)}
           />
-
-          {/* 제출 버튼을 Form 내부의 submit 버튼으로 변경 */}
           <button type="submit" className="ml-2">
             <FaPlusCircle className="text-3xl text-[#FF8F00]" />
           </button>
@@ -82,15 +88,15 @@ export default function Participant() {
         )}
       </form>
 
-      {/* 참가자 목록 */}
-      <div className="w-80 space-y-4 mt-6 ">
+      <div className="w-80 space-y-4 mt-6">
         {participants.map((participant, index) => (
           <div
             key={index}
-            className="flex justify-between border bg-white text-sm font-base text-gray-700 items-center shadow px-3 py-5 rounded-lg"
+            className="flex  justify-between border bg-gray-600  text-white items-center shadow px-3 py-3 rounded-lg"
           >
             <span>
-              {participant.name} - {participant.contact}
+              <div className="text-base">{participant.name}</div>
+              <div className="text-xs">{`참가자 - ${participant.contact}`}</div>
             </span>
             <button onClick={() => handleRemoveParticipant(index)}>
               <FaTimesCircle className="text-red-500 text-xl" />
@@ -99,7 +105,10 @@ export default function Participant() {
         ))}
       </div>
 
-      {/* 다음 버튼 */}
+      {errorMessage && (
+        <p className="text-red-500 text-sm mt-4">{errorMessage}</p>
+      )}
+
       <button
         onClick={handleNext}
         className="mt-9 px-8 py-3 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-700 font-semibold"
