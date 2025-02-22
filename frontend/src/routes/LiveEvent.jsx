@@ -53,13 +53,7 @@ export default function LiveEvent() {
 
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-gray-100 pt-60">
-      <div>
-        <img src="/icon_gift.png" alt="Gift Icon" />
-      </div>
-      <h1 className="text-4xl text-gray-600 font-medium mt-2 mb-5 font-semibold">
-        MONITO
-      </h1>
-      <p className="text-base text-gray-600 mb-5 font-semibold">
+      <p className="text-2xl text-gray-600 mb-5 font-semibold">
         참가자 추가하기
       </p>
 

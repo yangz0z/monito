@@ -21,7 +21,7 @@ export default function MonitoCard() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-5">
-      <h1 className="text-2xl font-semibold text-gray-600 mb-4">
+      <h1 className="text-2xl font-semibold text-gray-600 mb-5">
         마니또 카드 만들기
       </h1>
 

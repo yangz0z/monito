@@ -25,13 +25,7 @@ export default function CreateEvent() {
 
   return (
     <div className="mt-1 flex flex-col items-center justify-start h-screen bg-gray-100 relative pt-60">
-      <div>
-        <img src="/icon_gift.png" alt="Gift Icon" />
-      </div>
-      <h1 className="text-4xl text-gray-600 mt-2 mb-5 font-semibold">MONITO</h1>
-      <p className="text-base text-gray-600 mb-5 font-semibold">
-        이벤트 만들기
-      </p>
+      <p className="text-2xl text-gray-600 mb-5 font-semibold">이벤트 만들기</p>
 
       <div className="w-64">
         <input

@@ -45,13 +45,7 @@ export default function Participant() {
 
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-gray-100 pt-60 mt-1">
-      <div>
-        <img src="/icon_gift.png" alt="Gift Icon" />
-      </div>
-      <h1 className="text-4xl text-gray-600 font-medium mt-2 mb-5 font-semibold">
-        MONITO
-      </h1>
-      <p className="text-base text-gray-600 mb-5 font-semibold">
+      <p className="text-2xl text-gray-600 mb-5 font-semibold">
         참가자 추가하기
       </p>
 
@@ -75,7 +69,9 @@ export default function Participant() {
           <input
             type="text"
             placeholder="이메일 또는 휴대폰 번호"
-            className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-80 ${errors.contact ? "border-red-500" : ""}`}
+            className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-80 ${
+              errors.contact ? "border-red-500" : ""
+            }`}
             value={contact}
             onChange={(e) => setContact(e.target.value)}
           />
@@ -92,7 +88,7 @@ export default function Participant() {
         {participants.map((participant, index) => (
           <div
             key={index}
-            className="flex  justify-between border bg-gray-600  text-white items-center shadow px-3 py-3 rounded-lg"
+            className="flex  justify-between border bg-gray-500  text-white items-center shadow px-3 py-3 rounded-lg"
           >
             <span>
               <div className="text-base">{participant.name}</div>
