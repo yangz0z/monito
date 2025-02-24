@@ -79,7 +79,7 @@ export default function Layout() {
               <div className="absolute right-0 mt-2 w-48 text-sm font-semibold bg-white shadow-lg rounded-md overflow-hidden border p-3">
                 <button
                   onClick={() => {
-                    navigate("/account");
+                    navigate("/dash-board");
                     setDropdownOpen(false);
                   }}
                   className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-100 border-b border-gray-200 
