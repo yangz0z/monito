@@ -13,7 +13,12 @@ export default function Participant() {
   const handleNext = () => {
     setErrorMessage("");
 
-    if (participants.length === 0) {
+    if (!participants.length) {
+      // 이름과 연락처가 입력되었으나 참가자로 추가되지 않은 경우
+      if (name.trim() && contact.trim()) {
+        setErrorMessage("+ 추가 버튼을 눌러 참가자를 추가해주세요.");
+        return;
+      }
       setErrors({ name: !name.trim(), contact: !contact.trim() });
       return;
     }
