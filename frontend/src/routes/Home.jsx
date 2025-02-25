@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CountDown from "../components/CountDown";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
 
@@ -14,7 +17,7 @@ export default function Home() {
   const handleOptionClick = (option) => {
     if (option === "create") {
       setIsModalOpen(false);
-      setIsSecondModalOpen(true); // 두 번째 모달 열기
+      setIsSecondModalOpen(true);
     } else if (option === "join") {
       setIsModalOpen(false);
       navigate("/join-event");
@@ -29,26 +32,25 @@ export default function Home() {
   return (
     <div
       className="flex flex-col items-center justify-start h-screen pt-60"
-      onClick={() => document.activeElement.blur()} // ✅ 빈 공간 클릭 시 포커스 해제
+      onClick={() => document.activeElement.blur()} //  빈 공간 클릭 시 포커스 해제
     >
       <div>
         <img src="/icon_gift.png" alt="Gift Icon" />
       </div>
       <h1 className="text-4xl text-gray-600 font-semibold mt-2 mb-5">MONITO</h1>
       <p className="text-base text-gray-600 mb-0.5 font-semibold">
-        모두를 위한 마니또 MONITO에 오신 것을
+        {t("welcomeMessage1")}
       </p>
       <p className="text-base text-gray-600 text-center mb-5 font-semibold">
-        환영합니다.
+        {t("welcomeMessage2")}
       </p>
       <CountDown />
       <button
         onClick={handleCreateEventClick}
         className="mt-1 text-base font-semibold bg-[#D32F2F] text-white px-10 py-2.5 rounded-full shadow-xl hover:bg-red-700 "
       >
-        <span className="flex space-x-3 ">
-          <span>MONITO</span>
-          <span>시작하기</span>
+        <span>
+          <span>{t("startMonito")}</span>
         </span>
       </button>
 
@@ -58,25 +60,25 @@ export default function Home() {
           <div className="bg-white rounded-lg shadow-lg p-6 pt-3 w-80 text-right">
             <button
               onClick={() => setIsModalOpen(false)}
-              className="text-xl font-semibold text-gray-600 hover:text-gray-300  "
+              className="text-xl font-semibold text-gray-600 hover:text-gray-300"
             >
               X
             </button>
             <h2 className="text-xl font-semibold text-gray-600 mb-4 text-center">
-              실행 모드를 선택해주세요
+              {t("selectMode")}
             </h2>
             <div className="flex flex-col gap-4">
               <button
                 onClick={() => handleOptionClick("create")}
-                className="px-4 py-3 bg-gray-400 text-white rounded-full hover:bg-red-700  shadow-xl transition duration-400 font-semibold"
+                className="px-4 py-3 bg-gray-400 text-white rounded-full hover:bg-red-700 shadow-xl transition duration-400 font-semibold"
               >
-                새 이벤트 만들기
+                {t("createEvent")}
               </button>
               <button
                 onClick={() => handleOptionClick("join")}
                 className="px-4 py-3 bg-gray-400 text-white rounded-full hover:bg-red-700 shadow-xl transition duration-400 font-semibold"
               >
-                초대코드로 참여하기
+                {t("joinWithCode")}
               </button>
             </div>
           </div>
@@ -89,25 +91,25 @@ export default function Home() {
           <div className="bg-white rounded-lg shadow-lg p-6 pt-3 w-80 text-right">
             <button
               onClick={() => setIsSecondModalOpen(false)}
-              className="text-xl font-semibold text-gray-600 hover:text-gray-300  "
+              className="text-xl font-semibold text-gray-600 hover:text-gray-300"
             >
               X
             </button>
             <h2 className="text-xl font-semibold text-gray-600 mb-4 text-center">
-              생성 방식을 선택해주세요
+              {t("selectCreationMethod")}
             </h2>
             <div className="flex flex-col gap-4">
               <button
                 onClick={() => handleSecondModalOptionClick("/create-event")}
-                className="px-4 py-3 bg-gray-400 text-white rounded-full  shadow-xl hover:bg-red-700 transition duration-400 font-semibold"
+                className="px-4 py-3 bg-gray-400 text-white rounded-full shadow-xl hover:bg-red-700 transition duration-400 font-semibold"
               >
-                문자 / 카카오톡으로 알림 보내기
+                {t("notifyViaMessage")}
               </button>
               <button
                 onClick={() => handleSecondModalOptionClick("/live-event")}
                 className="px-4 py-3 bg-gray-400 text-white rounded-full shadow-xl hover:bg-red-700 transition duration-400 font-semibold"
               >
-                라이브로 진행하기
+                {t("liveEvent")}
               </button>
             </div>
           </div>

@@ -2,8 +2,10 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // ✅ 다국어 훅 추가
 
 export default function CreateEvent() {
+  const { t } = useTranslation(); // ✅ useTranslation 훅 사용
   const [eventName, setEventName] = useState("");
   const [budget, setBudget] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -25,12 +27,14 @@ export default function CreateEvent() {
 
   return (
     <div className="mt-1 flex flex-col items-center justify-start h-screen bg-gray-100 relative overflow-visible pt-60">
-      <p className="text-2xl text-gray-600 mb-5 font-semibold">이벤트 만들기</p>
+      <p className="text-2xl text-gray-600 mb-5 font-semibold">
+        {t("createEvent2")}
+      </p>
 
       <div className="w-64">
         <input
           type="text"
-          placeholder="이벤트 이름"
+          placeholder={t("eventNamePlaceholder")}
           value={eventName}
           onChange={(e) => setEventName(e.target.value)}
           className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-full ${
@@ -39,14 +43,14 @@ export default function CreateEvent() {
           required
         />
         {errors.eventName && (
-          <p className="text-red-500 text-xs mt-1">필수 입력 항목입니다.</p>
+          <p className="text-red-500 text-xs mt-1">{t("requiredField")}</p>
         )}
       </div>
 
       <div className="w-64 mt-2">
         <input
           type="text"
-          placeholder="예산"
+          placeholder={t("budgetPlaceholder")}
           value={budget}
           onChange={(e) => setBudget(e.target.value)}
           className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-full ${
@@ -55,12 +59,12 @@ export default function CreateEvent() {
           required
         />
         {errors.budget && (
-          <p className="text-red-500 text-xs mt-1">필수 입력 항목입니다.</p>
+          <p className="text-red-500 text-xs mt-1">{t("requiredField")}</p>
         )}
       </div>
 
       <div className="mt-2 flex items-center justify-between w-64 relative overflow-visible">
-        <span className="text-sm font-semibold">이벤트 날짜</span>
+        <span className="text-sm font-semibold">{t("eventDate")}</span>
         <DatePicker
           selected={selectedDate}
           onChange={(date) => setSelectedDate(date)}
@@ -90,7 +94,7 @@ export default function CreateEvent() {
         onClick={handleSubmit}
         className="mt-9 px-8 py-3 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-700 font-semibold"
       >
-        다음
+        {t("next")}
       </button>
     </div>
   );

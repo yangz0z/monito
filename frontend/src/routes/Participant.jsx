@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlusCircle, FaTimesCircle } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 export default function Participant() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [participants, setParticipants] = useState([]);
   const [name, setName] = useState("");
@@ -14,9 +16,8 @@ export default function Participant() {
     setErrorMessage("");
 
     if (!participants.length) {
-      // 이름과 연락처가 입력되었으나 참가자로 추가되지 않은 경우
       if (name.trim() && contact.trim()) {
-        setErrorMessage("+ 추가 버튼을 눌러 참가자를 추가해주세요.");
+        setErrorMessage(t("pressAddToIncludeParticipant"));
         return;
       }
       setErrors({ name: !name.trim(), contact: !contact.trim() });
@@ -24,7 +25,7 @@ export default function Participant() {
     }
 
     if (participants.length < 3) {
-      setErrorMessage("참가자는 최소 3명 이상이어야 합니다.");
+      setErrorMessage(t("minThreeParticipants"));
       return;
     }
 
@@ -51,14 +52,14 @@ export default function Participant() {
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-gray-100 pt-60 mt-1">
       <p className="text-2xl text-gray-600 mb-5 font-semibold">
-        참가자 추가하기
+        {t("addParticipants")}
       </p>
 
       <form onSubmit={handleSubmit} className="ml-10">
         <div>
           <input
             type="text"
-            placeholder="이름"
+            placeholder={t("namePlaceholder")}
             className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-80 ${
               errors.name ? "border-red-500" : ""
             }`}
@@ -66,14 +67,14 @@ export default function Participant() {
             onChange={(e) => setName(e.target.value)}
           />
           {errors.name && (
-            <p className="text-red-500 text-xs mt-1">필수 입력 항목입니다.</p>
+            <p className="text-red-500 text-xs mt-1">{t("requiredField")}</p>
           )}
         </div>
 
         <div className="mt-1 flex items-center space-x-2">
           <input
             type="text"
-            placeholder="이메일 또는 휴대폰 번호"
+            placeholder={t("contactPlaceholder")}
             className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-80 ${
               errors.contact ? "border-red-500" : ""
             }`}
@@ -85,7 +86,7 @@ export default function Participant() {
           </button>
         </div>
         {errors.contact && (
-          <p className="text-red-500 text-xs mt-1">필수 입력 항목입니다.</p>
+          <p className="text-red-500 text-xs mt-1">{t("requiredField")}</p>
         )}
       </form>
 
@@ -93,11 +94,11 @@ export default function Participant() {
         {participants.map((participant, index) => (
           <div
             key={index}
-            className="flex  justify-between border bg-gray-500  text-white items-center shadow px-3 py-3 rounded-lg"
+            className="flex justify-between border bg-gray-500 text-white items-center shadow px-3 py-3 rounded-lg"
           >
             <span>
               <div className="text-base">{participant.name}</div>
-              <div className="text-xs">{`참가자 - ${participant.contact}`}</div>
+              <div className="text-xs">{`${t("participantLabel")} - ${participant.contact}`}</div>
             </span>
             <button onClick={() => handleRemoveParticipant(index)}>
               <FaTimesCircle className="text-red-500 text-xl" />
@@ -114,7 +115,7 @@ export default function Participant() {
         onClick={handleNext}
         className="mt-16 px-8 py-3 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-700 font-semibold"
       >
-        다음
+        {t("next")}
       </button>
     </div>
   );

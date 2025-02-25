@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlusCircle, FaTimesCircle } from "react-icons/fa";
+import { useTranslation } from "react-i18next"; // ✅ 다국어 훅 추가
 
 export default function LiveEvent() {
+  const { t } = useTranslation(); // ✅ useTranslation 훅 사용
   const [participants, setParticipants] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(""); //  에러 메시지 상태 추가
@@ -15,7 +17,7 @@ export default function LiveEvent() {
     if (trimmedValue === "") {
       setError(
         <div className="text-red-500 text-xs mt-1 font-normal">
-          <p>이름을 입력하고 참가자를 추가하세요.</p>
+          <p>{t("enterNameToAdd")}</p>
         </div>
       );
       return;
@@ -24,8 +26,8 @@ export default function LiveEvent() {
     if (participants.includes(trimmedValue)) {
       setError(
         <div className="text-red-500 text-xs mt-1 font-normal">
-          <p>해당 이름은 참가자 목록에 이미 있습니다.</p>
-          <p className="text-center">다른 이름이나 별명을 추가하세요.</p>
+          <p>{t("nameAlreadyExists")}</p>
+          <p className="text-center">{t("chooseAnotherName")}</p>
         </div>
       );
       return;
@@ -39,11 +41,12 @@ export default function LiveEvent() {
   const handleDeleteParticipant = (indexToDelete) => {
     setParticipants(participants.filter((_, index) => index !== indexToDelete));
   };
+
   const handleNext = () => {
     if (participants.length < 3) {
       setError(
         <div className="text-red-500 text-xs mt-1 font-normal">
-          <p> 최소 3명 이상의 참가자를 추가하고 계속하세요.</p>
+          <p>{t("minParticipantsRequired")}</p>
         </div>
       );
       return;
@@ -54,7 +57,7 @@ export default function LiveEvent() {
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-gray-100 pt-60">
       <p className="text-2xl text-gray-600 mb-5 font-semibold">
-        참가자 추가하기
+        {t("addParticipants")}
       </p>
 
       <form
@@ -63,7 +66,7 @@ export default function LiveEvent() {
       >
         <input
           type="text"
-          placeholder="이름"
+          placeholder={t("namePlaceholder")}
           className={`border shadow pl-2 rounded-md px-6 py-1.5 text-gray-700 w-52 ${
             error ? "border-red-500" : ""
           }`}
@@ -98,9 +101,9 @@ export default function LiveEvent() {
 
       <button
         onClick={handleNext}
-        className=" mt-5 px-8 py-3  font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700"
+        className="mt-5 px-8 py-3 font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700"
       >
-        다음
+        {t("next")}
       </button>
     </div>
   );

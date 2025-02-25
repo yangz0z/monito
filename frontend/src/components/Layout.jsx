@@ -83,7 +83,7 @@ export default function Layout() {
             </button>
 
             {openDropdown === "lang" && (
-              <div className="absolute right-0 mt-2 w-48 text-sm font-semibold bg-white shadow-lg rounded-md overflow-hidden border p-3">
+              <div className="absolute right-0 mt-2 w-48 text-sm bg-white shadow-lg rounded-md overflow-hidden border p-3">
                 <button
                   onClick={() => {
                     changeLanguage("ko");
@@ -91,7 +91,7 @@ export default function Layout() {
                   }}
                   className={`block w-full text-left px-4 py-3 ${
                     language === "ko"
-                      ? "bg-gray-200 font-bold"
+                      ? "bg-gray-200"
                       : "text-gray-700 hover:bg-gray-100"
                   } border-b border-gray-200 rounded-t-md transition-all`}
                 >
@@ -104,7 +104,7 @@ export default function Layout() {
                   }}
                   className={`block w-full text-left px-4 py-3 ${
                     language === "en"
-                      ? "bg-gray-200 font-bold"
+                      ? "bg-gray-200"
                       : "text-gray-700 hover:bg-gray-100"
                   } rounded-b-md transition-all`}
                 >
