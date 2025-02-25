@@ -14,6 +14,8 @@ import MonitoCard from "./routes/cards";
 import ProtectedRoute from "./components/ProtectedRoute"; //  보호된 라우트 추가
 import { createGlobalStyle } from "styled-components";
 import styledReset from "styled-reset";
+import "./i18n";
+import LanguageProvider from "./Context/LanguageProvider";
 
 const GlobalStyles = createGlobalStyle`
   ${styledReset};
@@ -88,8 +90,10 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <GlobalStyles />
-      <RouterProvider router={router} />
+      <LanguageProvider>
+        <GlobalStyles />
+        <RouterProvider router={router} />
+      </LanguageProvider>
     </>
   );
 }
