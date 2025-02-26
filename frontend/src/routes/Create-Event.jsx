@@ -2,17 +2,17 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next"; // ✅ 다국어 훅 추가
+import { useTranslation } from "react-i18next";
 
 export default function CreateEvent() {
-  const { t } = useTranslation(); // ✅ useTranslation 훅 사용
+  const { t } = useTranslation();
   const [eventName, setEventName] = useState("");
   const [budget, setBudget] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [errors, setErrors] = useState({ eventName: false, budget: false });
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  const handleNext = () => {
     let newErrors = { eventName: false, budget: false };
 
     if (!eventName.trim()) newErrors.eventName = true;
@@ -40,7 +40,6 @@ export default function CreateEvent() {
           className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-full ${
             errors.eventName ? "border-red-500" : ""
           }`}
-          required
         />
         {errors.eventName && (
           <p className="text-red-500 text-xs mt-1">{t("requiredField")}</p>
@@ -56,7 +55,6 @@ export default function CreateEvent() {
           className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-full ${
             errors.budget ? "border-red-500" : ""
           }`}
-          required
         />
         {errors.budget && (
           <p className="text-red-500 text-xs mt-1">{t("requiredField")}</p>
@@ -91,7 +89,7 @@ export default function CreateEvent() {
       </div>
 
       <button
-        onClick={handleSubmit}
+        onClick={handleNext}
         className="mt-9 px-8 py-3 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-700 font-semibold"
       >
         {t("next")}

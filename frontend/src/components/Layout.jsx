@@ -127,7 +127,7 @@ export default function Layout() {
                 <span>{user.email}</span>
               </button>
               {openDropdown === "user" && (
-                <div className="absolute right-0 mt-2 w-48 text-sm font-semibold bg-white shadow-lg rounded-md overflow-hidden border p-3">
+                <div className="absolute right-0 mt-2 w-48 text-sm  bg-white shadow-lg rounded-md overflow-hidden border p-3">
                   <button
                     onClick={() => {
                       navigate("/dash-board");

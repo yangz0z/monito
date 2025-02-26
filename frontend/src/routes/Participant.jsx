@@ -113,7 +113,7 @@ export default function Participant() {
 
       <button
         onClick={handleNext}
-        className="mt-16 px-8 py-3 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-700 font-semibold"
+        className="mt-14 px-8 py-3 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-700 font-semibold"
       >
         {t("next")}
       </button>
