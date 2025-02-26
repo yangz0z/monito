@@ -83,7 +83,7 @@ export default function Layout() {
               <FaRegQuestionCircle />
             </button>
             {openDropdown === "help" && (
-              <div className="absolute right-0 mt-2 w-48 text-sm bg-white shadow-lg rounded-md overflow-hidden border p-3">
+              <div className="fixed top-16 w-48 text-sm bg-white shadow-lg rounded-md overflow-visible border p-3 z-50">
                 <button
                   onClick={() => {
                     navigate("/help-guide");
@@ -91,7 +91,7 @@ export default function Layout() {
                   }}
                   className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-100 border-b border-gray-200 rounded-t-md transition-all"
                 >
-                  사이트 이용 가이드
+                  {t("helpGuide")}
                 </button>
                 <button
                   onClick={() => {
@@ -100,7 +100,7 @@ export default function Layout() {
                   }}
                   className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-b-md transition-all"
                 >
-                  문의하기
+                  {t("contact")}
                 </button>
               </div>
             )}
@@ -117,7 +117,7 @@ export default function Layout() {
               <IoIosGlobe />
             </button>
             {openDropdown === "lang" && (
-              <div className="absolute  mt-2 w-48 text-sm bg-white shadow-lg rounded-md overflow-hidden border p-3">
+              <div className="fixed  top-16 w-48 text-sm bg-white shadow-lg rounded-md overflow-hidden border p-3 z-50">
                 <button
                   onClick={() => {
                     changeLanguage("ko");
@@ -153,7 +153,7 @@ export default function Layout() {
                 <span>{user.email}</span>
               </button>
               {openDropdown === "user" && (
-                <div className="absolute right-0 mt-2 w-48 text-sm bg-white shadow-lg rounded-md overflow-hidden border p-3">
+                <div className="fixed right-4 top-16 w-48 text-sm bg-white shadow-lg rounded-md overflow-hidden border p-3 z-50">
                   <button
                     onClick={() => {
                       navigate("/dash-board");

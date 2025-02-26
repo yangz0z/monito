@@ -45,6 +45,8 @@ const resources = {
       interestPlaceholder2: "Interests",
       selectBackgroundColor: "Select Background Color",
       saveCard: "Save Card",
+      helpGuide: "Help Guide",
+      contact: "Contact",
     },
   },
   ko: {
@@ -88,6 +90,8 @@ const resources = {
       interestPlaceholder2: "관심사",
       selectBackgroundColor: "배경색 선택",
       saveCard: "카드 저장",
+      helpGuide: "사이트 이용 가이드",
+      contact: "문의하기",
     },
   },
 };
