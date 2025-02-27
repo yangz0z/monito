@@ -34,14 +34,16 @@ export default function Home() {
       className="flex flex-col items-center justify-start h-screen pt-60"
       onClick={() => document.activeElement.blur()} //  빈 공간 클릭 시 포커스 해제
     >
-      <div>
-        <img src="/icon_gift.png" alt="Gift Icon" />
+      <div className="select-none pointer-events-none">
+        <img src="/icon_gift.png" alt="Gift Icon" draggable="false" />
       </div>
-      <h1 className="text-4xl text-gray-600 font-semibold mt-2 mb-5">MONITO</h1>
-      <p className="text-base text-gray-600 mb-0.5 font-semibold">
+      <h1 className="text-4xl text-gray-600 font-semibold mt-2 mb-5 select-none">
+        MONITO
+      </h1>
+      <p className="text-base text-gray-600 mb-0.5 font-semibold select-none">
         {t("welcomeMessage1")}
       </p>
-      <p className="text-base text-gray-600 text-center mb-5 font-semibold">
+      <p className="text-base text-gray-600 text-center mb-5 font-semibold select-none">
         {t("welcomeMessage2")}
       </p>
       <CountDown />

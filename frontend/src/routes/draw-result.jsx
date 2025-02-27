@@ -57,11 +57,8 @@ export default function DrawResult() {
 
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-gray-100 text-white pt-60">
-      <div>
-        <img src="/icon_gift.png" alt="Gift Icon" />
-      </div>
-      <h1 className="text-4xl text-gray-600 font-medium mt-2 mb-5 font-semibold">
-        MONITO
+      <h1 className="text-2xl font-semibold text-gray-600 mb-5 select-none">
+        최종결과
       </h1>
       {!isFinished ? (
         <>

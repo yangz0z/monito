@@ -68,7 +68,10 @@ export default function Layout() {
   return (
     <>
       <header className="flex justify-between items-center p-4 relative">
-        <button onClick={() => navigate("/")} className="text-2xl font-bold">
+        <button
+          onClick={() => navigate("/")}
+          className="text-2xl font-bold select-none"
+        >
           MONITO
         </button>
         <div className="flex items-center space-x-2">
@@ -149,8 +152,8 @@ export default function Layout() {
                 }
                 className="flex items-center space-x-2 bg-gray-200 px-4 py-2 text-gray-600 rounded-md"
               >
-                <FaUserCircle className="text-2xl" />
-                <span>{user.email}</span>
+                <FaUserCircle className="text-2xl " />
+                <span className="select-none">{user.email}</span>
               </button>
               {openDropdown === "user" && (
                 <div className="fixed right-4 top-16 w-48 text-sm bg-white shadow-lg rounded-md overflow-hidden border p-3 z-50">

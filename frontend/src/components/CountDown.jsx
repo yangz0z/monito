@@ -40,7 +40,7 @@ const CountDown = () => {
   }, []);
 
   return (
-    <div className="text-gray-600 mb-4">
+    <div className="text-gray-600 mb-4 select-none">
       <h1 className="text-center text-sm mb-1.5 font-semibold">
         {t("countdownTitle")}
       </h1>

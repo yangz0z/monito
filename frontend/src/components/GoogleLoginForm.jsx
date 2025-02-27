@@ -10,11 +10,11 @@ const API_BASE_URL = "https://monito-api-blue.vercel.app";
 
 const GoogleLoginForm = () => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false); // ✅ 로딩 상태 추가
+  const [loading, setLoading] = useState(false); //  로딩 상태 추가
   const navigate = useNavigate();
 
   const handleSuccess = async (response) => {
-    setLoading(true); // ✅ 로그인 버튼 클릭 후 로딩 시작
+    setLoading(true); //  로그인 버튼 클릭 후 로딩 시작
 
     const { credential } = response;
     const payload = credential.substring(
@@ -55,11 +55,11 @@ const GoogleLoginForm = () => {
 
   return (
     <GoogleOAuthProvider clientId={CLIENT_ID}>
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-100 select-none">
         {!user ? (
           <>
-            <div>
-              <img src="/icon_gift.png" alt="Gift Icon" />
+            <div className="select-none pointer-events-none">
+              <img src="/icon_gift.png" alt="Gift Icon" draggable="false" />
             </div>
             <h1 className="text-4xl text-gray-600 font-medium mt-2 mb-5 font-semibold">
               MONITO
