@@ -47,6 +47,11 @@ const resources = {
       saveCard: "Save Card",
       helpGuide: "Help Guide",
       contact: "Contact",
+      giftGiver: "The person giving the gift is..",
+      drawing: "Drawing in progress..",
+      finalResult: "Final Result",
+      viewResult: "View Result",
+      returnHome: "Return Home",
     },
   },
   ko: {
@@ -92,6 +97,11 @@ const resources = {
       saveCard: "카드 저장",
       helpGuide: "사이트 이용 가이드",
       contact: "문의하기",
+      giftGiver: "이(가) 선물을 줄 사람은",
+      drawing: "추첨중..",
+      finalResult: "최종결과",
+      viewResult: "결과보기",
+      returnHome: "홈으로 돌아가기",
     },
   },
 };

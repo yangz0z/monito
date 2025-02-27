@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlusCircle, FaTimesCircle } from "react-icons/fa";
-import { useTranslation } from "react-i18next"; // ✅ 다국어 훅 추가
+import { useTranslation } from "react-i18next"; // 다국어 훅 추가
 
 export default function LiveEvent() {
-  const { t } = useTranslation(); // ✅ useTranslation 훅 사용
+  const { t } = useTranslation(); //  useTranslation 훅 사용
   const [participants, setParticipants] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(""); //  에러 메시지 상태 추가

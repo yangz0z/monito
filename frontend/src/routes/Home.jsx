@@ -58,7 +58,7 @@ export default function Home() {
 
       {/* 첫 번째 모달 */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50  select-none">
           <div className="bg-white rounded-lg shadow-lg p-6 pt-3 w-80 text-right">
             <button
               onClick={() => setIsModalOpen(false)}
@@ -89,7 +89,7 @@ export default function Home() {
 
       {/* 두 번째 모달 */}
       {isSecondModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50  select-none">
           <div className="bg-white rounded-lg shadow-lg p-6 pt-3 w-80 text-right">
             <button
               onClick={() => setIsSecondModalOpen(false)}

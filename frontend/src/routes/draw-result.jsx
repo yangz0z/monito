@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next"; // 다국어 훅 추가
 
 export default function DrawResult() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation(); //  useTranslation 훅 사용
   const { participants } = location.state || { participants: [] };
   const [result, setResult] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -58,7 +60,7 @@ export default function DrawResult() {
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-gray-100 text-white pt-60">
       <h1 className="text-2xl font-semibold text-gray-600 mb-5 select-none">
-        최종결과
+        {isFinished ? t("finalResult") : t("drawing")}
       </h1>
       {!isFinished ? (
         <>
@@ -78,7 +80,7 @@ export default function DrawResult() {
               className="text-lg font-semibold text-gray-600 transition-opacity duration-1000 opacity-0 animate-fadeIn"
               key={currentIndex} // currentIndex 변경 시마다 애니메이션 실행
             >
-              이(가) 선물을 줄 사람은
+              {t("giftGiver")}
             </p>
 
             {/* 선물 받을 사람 이름 */}
@@ -93,7 +95,7 @@ export default function DrawResult() {
               onClick={handleNext}
               className="mt-5 px-8 py-3 font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700 transition-opacity duration-500"
             >
-              {currentIndex === result.length - 1 ? "결과 보기" : "다음"}
+              {currentIndex === result.length - 1 ? t("viewResult") : t("next")}
             </button>
           )}
         </>
@@ -114,7 +116,7 @@ export default function DrawResult() {
             onClick={() => navigate("/")}
             className="mt-5 px-8 py-3 font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700"
           >
-            홈으로 돌아가기
+            {t("returnHome")}
           </button>
         </>
       )}
