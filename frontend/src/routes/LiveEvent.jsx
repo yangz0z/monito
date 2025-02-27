@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlusCircle, FaTimesCircle } from "react-icons/fa";
-import { useTranslation } from "react-i18next"; // 다국어 훅 추가
+import { useTranslation } from "react-i18next";
 
 export default function LiveEvent() {
   const { t } = useTranslation(); //  useTranslation 훅 사용
@@ -56,7 +56,7 @@ export default function LiveEvent() {
 
   return (
     <div className="flex flex-col items-center justify-start h-screen bg-gray-100 pt-60">
-      <p className="text-2xl text-gray-600 mb-5 font-semibold select-none">
+      <p className="text-2xl text-gray-600 mb-1 font-semibold select-none">
         {t("addParticipants")}
       </p>
 

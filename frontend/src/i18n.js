@@ -52,6 +52,9 @@ const resources = {
       finalResult: "Final Result",
       viewResult: "View Result",
       returnHome: "Return Home",
+      liveEventJoinTitle: "Join with Invitation Code",
+      enterInviteCode: "Enter your invitation code",
+      participateButton: "Join ",
     },
   },
   ko: {
@@ -102,6 +105,9 @@ const resources = {
       finalResult: "최종결과",
       viewResult: "결과보기",
       returnHome: "홈으로 돌아가기",
+      liveEventJoinTitle: "초대 코드로 참여하기",
+      enterInviteCode: "초대 코드를 입력하세요",
+      participateButton: "참여하기",
     },
   },
 };
