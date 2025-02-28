@@ -11,7 +11,7 @@ export default function LiveEvent() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (invitation.trim() === "") {
-      setError(t("requiredField", "Please enter the invitation code."));
+      setError(t("invitationCode"));
     } else {
       setError("");
       navigate(`/live-event/${invitation}`);
@@ -36,7 +36,7 @@ export default function LiveEvent() {
             setInvitation(e.target.value);
             if (error) setError("");
           }}
-          className={`border shadow pl-2 placeholder:text-center rounded-md px-6 py-1.5 text-gray-700 w-64 mb-9 ${
+          className={`border shadow pl-2 placeholder:text-center rounded-md px-6 py-1.5 text-gray-700 w-64 mn${
             error ? "border-red-500" : ""
           }`}
         />

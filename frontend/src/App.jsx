@@ -11,6 +11,7 @@ import CreateEvent from "./routes/create-event";
 import DashBoard from "./routes/dash-board";
 import Participant from "./routes/Participant";
 import MonitoCard from "./routes/cards";
+import ConfirmEvent from "./routes/ConfirmEvent";
 import ProtectedRoute from "./components/ProtectedRoute"; //  보호된 라우트 추가
 import { createGlobalStyle } from "styled-components";
 import styledReset from "styled-reset";
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
           {
             path: "cards",
             element: <MonitoCard />,
+          },
+          {
+            path: "cards/confirm",
+            element: <ConfirmEvent />,
           },
         ],
       },

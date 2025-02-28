@@ -55,6 +55,7 @@ const resources = {
       liveEventJoinTitle: "Join with Invitation Code",
       enterInviteCode: "Enter your invitation code",
       participateButton: "Join ",
+      invitationCode: "Please enter the invitation code.",
     },
   },
   ko: {
@@ -108,6 +109,7 @@ const resources = {
       liveEventJoinTitle: "초대 코드로 참여하기",
       enterInviteCode: "초대 코드를 입력하세요",
       participateButton: "참여하기",
+      invitationCode: "초대 코드를 입력해주세요.",
     },
   },
 };

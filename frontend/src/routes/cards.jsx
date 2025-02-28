@@ -26,7 +26,7 @@ export default function MonitoCard() {
     setErrors(newErrors);
 
     if (!newErrors.nickname && !newErrors.bio && !newErrors.interest) {
-      navigate("/create-event/participant");
+      navigate("confirm");
     }
   };
 
