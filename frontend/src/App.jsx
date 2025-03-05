@@ -75,11 +75,11 @@ const router = createBrowserRouter([
             element: <Participant />,
           },
           {
-            path: "cards",
+            path: "create-event/cards",
             element: <MonitoCard />,
           },
           {
-            path: "cards/confirm",
+            path: "create-event/confirm",
             element: <ConfirmEvent />,
           },
         ],

@@ -26,7 +26,7 @@ export default function MonitoCard() {
     setErrors(newErrors);
 
     if (!newErrors.nickname && !newErrors.bio && !newErrors.interest) {
-      navigate("confirm");
+      navigate("/create-event/confirm");
     }
   };
 
@@ -88,7 +88,7 @@ export default function MonitoCard() {
       {/* 마니또 카드 미리보기 */}
       <div
         ref={cardRef}
-        className="w-64 h-96 flex flex-col items-center justify-center mt-6 rounded-lg shadow-lg"
+        className="w-64 h-96 flex flex-col items-center justify-center mt-6 rounded-lg shadow-2xl"
         style={{ backgroundColor: bgColor }}
       >
         <h2 className="text-2xl font-bold text-white">

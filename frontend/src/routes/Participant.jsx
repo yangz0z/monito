@@ -29,7 +29,7 @@ export default function Participant() {
       return;
     }
 
-    navigate("/cards");
+    navigate("/create-event/cards");
   };
 
   const handleSubmit = (e) => {
