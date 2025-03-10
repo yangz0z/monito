@@ -31,19 +31,19 @@ export default function Home() {
 
   return (
     <div
-      className="flex flex-col items-center justify-start h-screen pt-60"
+      className="flex flex-col items-center justify-start h-screen pt-60 select-none"
       onClick={() => document.activeElement.blur()} //  빈 공간 클릭 시 포커스 해제
     >
-      <div className="select-none pointer-events-none">
+      <div className=" pointer-events-none">
         <img src="/icon_gift.png" alt="Gift Icon" draggable="false" />
       </div>
-      <h1 className="text-4xl text-gray-600 font-semibold mt-2 mb-5 select-none">
+      <h1 className="text-4xl text-gray-600 font-semibold mt-2 mb-5 ">
         MONITO
       </h1>
-      <p className="text-base text-gray-600 mb-0.5 font-semibold select-none">
+      <p className="text-base text-gray-600 mb-0.5 font-semibold ">
         {t("welcomeMessage1")}
       </p>
-      <p className="text-base text-gray-600 text-center mb-5 font-semibold select-none">
+      <p className="text-base text-gray-600 text-center mb-5 font-semibold ">
         {t("welcomeMessage2")}
       </p>
       <CountDown />
@@ -58,7 +58,7 @@ export default function Home() {
 
       {/* 첫 번째 모달 */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50  select-none">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50  ">
           <div className="bg-white rounded-lg shadow-lg p-6 pt-3 w-80 text-right">
             <button
               onClick={() => setIsModalOpen(false)}
@@ -89,7 +89,7 @@ export default function Home() {
 
       {/* 두 번째 모달 */}
       {isSecondModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50  select-none">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50  ">
           <div className="bg-white rounded-lg shadow-lg p-6 pt-3 w-80 text-right">
             <button
               onClick={() => setIsSecondModalOpen(false)}

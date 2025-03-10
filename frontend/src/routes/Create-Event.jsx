@@ -26,12 +26,12 @@ export default function CreateEvent() {
   };
 
   return (
-    <div className="mt-1 flex flex-col items-center justify-start h-screen bg-gray-100 relative overflow-visible pt-60 z-10">
-      <p className="text-2xl text-gray-600 mb-5 font-semibold">
+    <div className="mt-1 flex flex-col items-center justify-start h-screen bg-gray-100 relative overflow-visible pt-60 z-10 select-none">
+      <p className="text-2xl text-gray-600 mb-5 font-semibold ">
         {t("createEvent2")}
       </p>
 
-      <div className="w-64">
+      <div className="w-64 ">
         <input
           type="text"
           placeholder={t("eventNamePlaceholder")}
@@ -46,7 +46,7 @@ export default function CreateEvent() {
         )}
       </div>
 
-      <div className="w-64 mt-2">
+      <div className="w-64 mt-2 ">
         <input
           type="text"
           placeholder={t("budgetPlaceholder")}

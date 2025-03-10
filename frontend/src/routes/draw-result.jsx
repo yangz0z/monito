@@ -58,14 +58,14 @@ export default function DrawResult() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start h-screen bg-gray-100 text-white pt-60">
-      <h1 className="text-2xl font-semibold text-gray-600 mb-5 select-none">
+    <div className="flex flex-col items-center justify-start h-screen bg-gray-100 text-white pt-60 select-none">
+      <h1 className="text-2xl font-semibold text-gray-600 mb-5 ">
         {isFinished ? t("finalResult") : t("drawing")}
       </h1>
       {!isFinished ? (
         <>
           {/* 개별 결과 표시 */}
-          <div className="flex flex-col items-center bg-white text-gray-800 p-6 rounded-lg shadow-lg w-80">
+          <div className="flex flex-col items-center bg-white text-gray-800 p-6 rounded-lg shadow-lg w-80 ">
             <p className="text-2xl text-gray-600 font-semibold mb-2">
               {result[currentIndex]?.giver}
             </p>

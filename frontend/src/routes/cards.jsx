@@ -31,8 +31,8 @@ export default function MonitoCard() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center  bg-gray-100 p-5 ">
-      <h1 className="text-2xl font-semibold text-gray-600 mb-5 select-none">
+    <div className="flex flex-col items-center justify-center  bg-gray-100 p-5 select-none">
+      <h1 className="text-2xl font-semibold text-gray-600 mb-5 ">
         {t("createMonitoCard")}
       </h1>
 

@@ -55,8 +55,8 @@ export default function LiveEvent() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start h-screen bg-gray-100 pt-60">
-      <p className="text-2xl text-gray-600 mb-1 font-semibold select-none">
+    <div className="flex flex-col items-center justify-start h-screen bg-gray-100 pt-60 select-none">
+      <p className="text-2xl text-gray-600 mb-1 font-semibold ">
         {t("addParticipants")}
       </p>
 
