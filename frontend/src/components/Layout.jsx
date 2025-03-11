@@ -70,7 +70,7 @@ export default function Layout() {
       <header className="flex justify-between items-center p-4 relative">
         <button
           onClick={() => navigate("/")}
-          className="text-2xl font-bold select-none"
+          className="text-2xl font-serif	 font-bold select-none"
         >
           MONITO
         </button>

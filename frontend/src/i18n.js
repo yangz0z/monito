@@ -122,7 +122,7 @@ const resources = {
       enterInviteCode: "초대 코드를 입력하세요",
       participateButton: "참여하기",
       invitationCode: "초대 코드를 입력해주세요.",
-      reviewEvent: "이벤트 검토",
+      reviewEvent: "이벤트 미리보기",
       eventDetails: "이벤트 세부정보",
       eventName: "이벤트 이름",
       budget: "예산",
