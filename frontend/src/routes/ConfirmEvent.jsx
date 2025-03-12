@@ -6,7 +6,12 @@ import { useEvent } from "../Context/EventContext"; // Context 추가!
 export default function ConfirmEvent() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { eventData } = useEvent(); // Context에서 데이터 가져오기
+  const { eventData, setEventData } = useEvent(); // Context에서 데이터 가져오기
+
+  // 참가자 목록이 있으면 첫 번째 참가자를 주최자로 설정, 없으면 본인의 닉네임 사용
+  const organizer = eventData.participants.length
+    ? eventData.participants[0]
+    : { name: eventData.nickname, contact: "N/A" };
 
   const handleEdit = (path) => {
     navigate(path);
@@ -28,8 +33,10 @@ export default function ConfirmEvent() {
         {/* 왼쪽 (이벤트 세부정보 + 참가자 목록) */}
         <div className="flex flex-col gap-5 w-full md:w-1/2">
           {/* 이벤트 정보 */}
-          <div className="bg-white p-5 shadow-md rounded-md">
-            <h2 className="font-semibold text-base">{t("eventDetails")}</h2>
+          <div className="bg-white p-5 text-sm shadow-md rounded-md">
+            <h2 className="font-semibold mb-3 text-base">
+              {t("eventDetails")}
+            </h2>
             <p>
               <strong>{t("eventName")}:</strong> {eventData.eventName || "N/A"}
             </p>
@@ -51,16 +58,16 @@ export default function ConfirmEvent() {
           </div>
 
           {/* 참가자 리스트 */}
-          <div className="bg-white p-5 shadow-md rounded-md">
+          <div className="bg-white p-5 shadow-md text-sm rounded-md">
             <h2 className="font-semibold text-base">{t("participantList")}</h2>
             <ul className="mt-2">
-              <li className="border-b py-1 font-bold text-blue-600">
-                {t("organizerLabel")}: {eventData.nickname || "N/A"} (
-                {t("self")})
+              {/* 첫 번째 참가자를 주최자로 표시 */}
+              <li className="border-b py-1 font-bold text-gray-600">
+                {t("organizerLabel")}: {organizer.name} ({t("self")})
               </li>
-              {eventData.participants.length ? (
-                eventData.participants.map((p, index) => (
-                  <li key={index} className="border-b py-1">
+              {eventData.participants.length > 1 ? (
+                eventData.participants.slice(1).map((p, index) => (
+                  <li key={index} className="border-b">
                     {p.name} - {p.contact}
                   </li>
                 ))
