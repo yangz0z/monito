@@ -3,12 +3,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useEvent } from "../Context/EventContext"; // Context 불러오기
 
 export default function CreateEvent() {
   const { t } = useTranslation();
-  const [eventName, setEventName] = useState("");
-  const [budget, setBudget] = useState("");
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const { eventData, setEventData } = useEvent(); // 전역 상태 가져오기
+  const [eventName, setEventName] = useState(eventData.eventName);
+  const [budget, setBudget] = useState(eventData.budget);
+  const [selectedDate, setSelectedDate] = useState(eventData.selectedDate);
   const [errors, setErrors] = useState({ eventName: false, budget: false });
   const navigate = useNavigate();
 
@@ -21,7 +23,15 @@ export default function CreateEvent() {
     setErrors(newErrors);
 
     if (!newErrors.eventName && !newErrors.budget) {
-      navigate("/create-event/participant");
+      // Context에 데이터 저장
+      setEventData((prev) => ({
+        ...prev,
+        eventName,
+        budget,
+        selectedDate,
+      }));
+
+      navigate("/create-event/participant"); // 다음 페이지로 이동
     }
   };
 
@@ -31,7 +41,7 @@ export default function CreateEvent() {
         {t("createEvent2")}
       </p>
 
-      <div className="w-64 ">
+      <div className="w-64">
         <input
           type="text"
           placeholder={t("eventNamePlaceholder")}
@@ -46,7 +56,7 @@ export default function CreateEvent() {
         )}
       </div>
 
-      <div className="w-64 mt-2 ">
+      <div className="w-64 mt-2">
         <input
           type="text"
           placeholder={t("budgetPlaceholder")}
@@ -68,20 +78,16 @@ export default function CreateEvent() {
           onChange={(date) => setSelectedDate(date)}
           dateFormat="yyyy-MM-dd"
           className="border shadow rounded-md w-24 py-1.5 text-gray-700 text-center text-sm font-semibold"
-          withPortal // 드롭다운을 body에 직접 렌더링
+          withPortal
           popperProps={{
             modifiers: [
               {
                 name: "preventOverflow",
-                options: {
-                  boundary: "viewport", // 화면 내에서 자동 조정
-                },
+                options: { boundary: "viewport" },
               },
               {
                 name: "flip",
-                options: {
-                  fallbackPlacements: ["top", "bottom"],
-                },
+                options: { fallbackPlacements: ["top", "bottom"] },
               },
             ],
           }}

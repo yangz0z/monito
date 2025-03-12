@@ -1,25 +1,15 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaEdit } from "react-icons/fa";
+import { useEvent } from "../Context/EventContext"; // Context 추가!
 
 export default function ConfirmEvent() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const eventData = location.state?.eventData || {
-    eventName: "N/A",
-    budget: "N/A",
-    selectedDate: null,
-    participants: [],
-    nickname: "N/A",
-    bio: "N/A",
-    interest: "N/A",
-    bgColor: "#325040",
-  };
+  const { eventData } = useEvent(); // Context에서 데이터 가져오기
 
   const handleEdit = (path) => {
-    navigate(path, { state: { eventData } });
+    navigate(path);
   };
 
   const handleComplete = () => {
@@ -41,15 +31,15 @@ export default function ConfirmEvent() {
           <div className="bg-white p-5 shadow-md rounded-md">
             <h2 className="font-semibold text-base">{t("eventDetails")}</h2>
             <p>
-              <strong>{t("eventName")}:</strong> {eventData.eventName}
+              <strong>{t("eventName")}:</strong> {eventData.eventName || "N/A"}
             </p>
             <p>
-              <strong>{t("budget")}:</strong> {eventData.budget}
+              <strong>{t("budget")}:</strong> {eventData.budget || "N/A"}
             </p>
             <p>
               <strong>{t("eventDate")}:</strong>{" "}
               {eventData.selectedDate
-                ? eventData.selectedDate.toLocaleDateString()
+                ? new Date(eventData.selectedDate).toLocaleDateString()
                 : "N/A"}
             </p>
             <button
@@ -65,7 +55,8 @@ export default function ConfirmEvent() {
             <h2 className="font-semibold text-base">{t("participantList")}</h2>
             <ul className="mt-2">
               <li className="border-b py-1 font-bold text-blue-600">
-                {t("organizerLabel")}: {eventData.nickname} ({t("self")})
+                {t("organizerLabel")}: {eventData.nickname || "N/A"} (
+                {t("self")})
               </li>
               {eventData.participants.length ? (
                 eventData.participants.map((p, index) => (
@@ -91,18 +82,20 @@ export default function ConfirmEvent() {
           <h2 className="font-semibold text-base">{t("yourMonitoCard")}</h2>
           <div
             className="w-full max-w-xs h-96 flex flex-col items-center justify-center rounded-lg shadow-lg mt-3"
-            style={{ backgroundColor: eventData.bgColor }}
+            style={{ backgroundColor: eventData.bgColor || "#325040" }}
           >
             <h2 className="text-2xl font-bold text-white">
-              {eventData.nickname}
+              {eventData.nickname || "N/A"}
             </h2>
-            <p className="text-white mt-2 text-center">{eventData.bio}</p>
+            <p className="text-white mt-2 text-center">
+              {eventData.bio || "N/A"}
+            </p>
             <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full mt-3">
-              {eventData.interest}
+              {eventData.interest || "N/A"}
             </span>
           </div>
           <button
-            onClick={() => handleEdit("/cards")}
+            onClick={() => handleEdit("/create-event/cards")}
             className="mt-2 text-blue-500 flex items-center"
           >
             <FaEdit className="mr-1" /> {t("edit")}

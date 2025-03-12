@@ -2,11 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlusCircle, FaTimesCircle } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { useEvent } from "../Context/EventContext"; // Context 추가!
 
 export default function Participant() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [participants, setParticipants] = useState([]);
+  const { eventData, setEventData } = useEvent(); // 전역 상태 가져오기
+  const [participants, setParticipants] = useState(
+    eventData.participants || []
+  );
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [errors, setErrors] = useState({ name: false, contact: false });
@@ -29,13 +33,20 @@ export default function Participant() {
       return;
     }
 
+    // Context에 참가자 정보 저장
+    setEventData((prev) => ({
+      ...prev,
+      participants,
+    }));
+
     navigate("/create-event/cards");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (name.trim() && contact.trim()) {
-      setParticipants([...participants, { name, contact }]);
+      const newParticipants = [...participants, { name, contact }];
+      setParticipants(newParticipants);
       setName("");
       setContact("");
       setErrors({ name: false, contact: false });
@@ -46,7 +57,8 @@ export default function Participant() {
   };
 
   const handleRemoveParticipant = (index) => {
-    setParticipants(participants.filter((_, i) => i !== index));
+    const updatedParticipants = participants.filter((_, i) => i !== index);
+    setParticipants(updatedParticipants);
   };
 
   return (

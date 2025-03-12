@@ -1,9 +1,11 @@
 import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useEvent } from "../Context/EventContext"; // Context 추가!
 
 export default function MonitoCard() {
   const { t } = useTranslation();
+  const { eventData, setEventData } = useEvent(); // 전역 상태 가져오기
   const [nickname, setNickname] = useState("");
   const [bio, setBio] = useState("");
   const [interest, setInterest] = useState("");
@@ -16,8 +18,9 @@ export default function MonitoCard() {
 
   const navigate = useNavigate();
   const cardRef = useRef(null);
+
   const handleNext = () => {
-    let newErrors = { eventName: false, budget: false };
+    let newErrors = { nickname: false, bio: false, interest: false };
 
     if (!nickname.trim()) newErrors.nickname = true;
     if (!bio.trim()) newErrors.bio = true;
@@ -26,12 +29,21 @@ export default function MonitoCard() {
     setErrors(newErrors);
 
     if (!newErrors.nickname && !newErrors.bio && !newErrors.interest) {
-      navigate("/create-event/confirm");
+      // Context에 마니또 카드 정보 저장
+      setEventData((prev) => ({
+        ...prev,
+        manitoCards: [
+          ...prev.manitoCards,
+          { nickname, bio, interest, bgColor },
+        ],
+      }));
+
+      navigate("/create-event/confirm"); // 다음 페이지로 이동
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center  bg-gray-100 p-5 select-none">
+    <div className="flex flex-col items-center justify-center bg-gray-100 p-5 select-none">
       <h1 className="text-2xl font-semibold text-gray-600 mb-5 ">
         {t("createMonitoCard")}
       </h1>
@@ -53,7 +65,7 @@ export default function MonitoCard() {
         <input
           type="text"
           placeholder={t("bioPlaceholder")}
-          className={`w-full p-2 border rounded-md mb-2  ${
+          className={`w-full p-2 border rounded-md mb-2 ${
             errors.bio ? "border-red-500" : ""
           }`}
           value={bio}

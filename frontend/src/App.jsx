@@ -12,11 +12,12 @@ import DashBoard from "./routes/dash-board";
 import Participant from "./routes/Participant";
 import MonitoCard from "./routes/cards";
 import ConfirmEvent from "./routes/ConfirmEvent";
-import ProtectedRoute from "./components/ProtectedRoute"; //  보호된 라우트 추가
+import ProtectedRoute from "./components/ProtectedRoute"; // 보호된 라우트 추가
 import { createGlobalStyle } from "styled-components";
 import styledReset from "styled-reset";
 import "./i18n";
 import LanguageProvider from "./Context/LanguageProvider";
+import { EventProvider } from "./Context/EventContext";
 
 const GlobalStyles = createGlobalStyle`
   ${styledReset};
@@ -36,11 +37,11 @@ const GlobalStyles = createGlobalStyle`
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ProtectedRoute />, //  보호된 라우트 추가 (로그인 필요)
+    element: <ProtectedRoute />, // 보호된 라우트 추가 (로그인 필요)
     children: [
       {
         path: "",
-        element: <Layout />, //  Layout 내부에서 Outlet 사용
+        element: <Layout />, // Layout 내부에서 Outlet 사용
         children: [
           {
             path: "",
@@ -96,8 +97,12 @@ function App() {
   return (
     <>
       <LanguageProvider>
-        <GlobalStyles />
-        <RouterProvider router={router} />
+        <EventProvider>
+          {" "}
+          {/* 이벤트 컨텍스트 추가 */}
+          <GlobalStyles />
+          <RouterProvider router={router} />
+        </EventProvider>
       </LanguageProvider>
     </>
   );
