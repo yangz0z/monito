@@ -102,7 +102,11 @@ export default function Participant() {
         )}
       </form>
 
-      <div className="w-80 space-y-4 mt-6">
+      {/* 참가자 목록 (스크롤 가능) */}
+      <div
+        className="w-80 space-y-4 mt-6 overflow-y-auto bg-gray-100 shadow-md rounded-md"
+        style={{ maxHeight: "300px" }} // 스크롤 높이 제한
+      >
         {participants.map((participant, index) => (
           <div
             key={index}
