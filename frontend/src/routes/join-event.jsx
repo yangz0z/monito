@@ -24,10 +24,7 @@ export default function LiveEvent() {
         {t("liveEventJoinTitle")}
       </p>
 
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col items-center space-y-2"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <input
           type="text"
           placeholder={t("enterInviteCode")}
@@ -36,18 +33,22 @@ export default function LiveEvent() {
             setInvitation(e.target.value);
             if (error) setError("");
           }}
-          className={`border shadow pl-2 placeholder:text-center rounded-md px-6 py-1.5 text-gray-700 w-64 mn${
+          className={`border shadow pl-2 placeholder:text-center rounded-md px-6 py-1.5 text-gray-700 w-64 ${
             error ? "border-red-500" : ""
           }`}
         />
         {/* 에러 메시지 출력 */}
         {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
-        <button
-          type="submit"
-          className="mt-5 px-8 py-3 font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700 transition duration-400"
-        >
-          {t("participateButton")}
-        </button>
+
+        {/* 버튼을 div로 감싸 별도의 margin 적용 */}
+        <div className="mt-10">
+          <button
+            type="submit"
+            className="px-8 py-3 font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700 transition duration-400"
+          >
+            {t("participateButton")}
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -9,9 +9,20 @@ export default function ConfirmEvent() {
   const { eventData, setEventData } = useEvent(); // Context에서 데이터 가져오기
 
   // 참가자 목록이 있으면 첫 번째 참가자를 주최자로 설정, 없으면 본인의 닉네임 사용
-  const organizer = eventData.participants.length
-    ? eventData.participants[0]
-    : { name: eventData.nickname, contact: "N/A" };
+  const organizer =
+    eventData.participants?.length > 0
+      ? eventData.participants[0]
+      : { name: eventData.nickname || "N/A", contact: "N/A" };
+
+  // 마니또 카드 데이터 확인 (여러 개가 있을 경우 첫 번째만 표시)
+  const manitoCard = eventData.manitoCards?.length
+    ? eventData.manitoCards[0]
+    : {
+        nickname: eventData.nickname || "N/A",
+        bio: eventData.bio || "N/A",
+        interest: eventData.interest || "N/A",
+        bgColor: eventData.bgColor || "#325040",
+      };
 
   const handleEdit = (path) => {
     navigate(path);
@@ -29,7 +40,7 @@ export default function ConfirmEvent() {
       </h1>
 
       {/* 메인 콘텐츠 영역 */}
-      <div className="flex flex-col md:flex-row gap-5 w-full max-w-4xl ml-32">
+      <div className="flex flex-col md:flex-row gap-5 w-full max-w-4xl">
         {/* 왼쪽 (이벤트 세부정보 + 참가자 목록) */}
         <div className="flex flex-col gap-5 w-full md:w-1/2">
           {/* 이벤트 정보 */}
@@ -61,13 +72,12 @@ export default function ConfirmEvent() {
           <div className="bg-white p-5 shadow-md text-sm rounded-md">
             <h2 className="font-semibold text-base">{t("participantList")}</h2>
             <ul className="mt-2">
-              {/* 첫 번째 참가자를 주최자로 표시 */}
               <li className="border-b py-1 font-bold text-gray-600">
                 {t("organizerLabel")}: {organizer.name} ({t("self")})
               </li>
-              {eventData.participants.length > 1 ? (
+              {eventData.participants?.length > 1 ? (
                 eventData.participants.slice(1).map((p, index) => (
-                  <li key={index} className="border-b">
+                  <li key={index} className="border-b py-1">
                     {p.name} - {p.contact}
                   </li>
                 ))
@@ -89,16 +99,14 @@ export default function ConfirmEvent() {
           <h2 className="font-semibold text-base">{t("yourMonitoCard")}</h2>
           <div
             className="w-full max-w-xs h-96 flex flex-col items-center justify-center rounded-lg shadow-lg mt-3"
-            style={{ backgroundColor: eventData.bgColor || "#325040" }}
+            style={{ backgroundColor: manitoCard.bgColor }}
           >
             <h2 className="text-2xl font-bold text-white">
-              {eventData.nickname || "N/A"}
+              {manitoCard.nickname}
             </h2>
-            <p className="text-white mt-2 text-center">
-              {eventData.bio || "N/A"}
-            </p>
+            <p className="text-white mt-2 text-center">{manitoCard.bio}</p>
             <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full mt-3">
-              {eventData.interest || "N/A"}
+              {manitoCard.interest}
             </span>
           </div>
           <button
