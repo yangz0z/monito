@@ -9,7 +9,7 @@ export default function MonitoCard() {
   const navigate = useNavigate();
   const cardRef = useRef(null);
 
-  // ✅ 기존 eventData에서 마니또 카드 데이터를 불러와 초기화
+  //  기존 eventData에서 마니또 카드 데이터를 불러와 초기화
   const [nickname, setNickname] = useState("");
   const [bio, setBio] = useState("");
   const [interest, setInterest] = useState("");
@@ -20,7 +20,7 @@ export default function MonitoCard() {
     interest: false,
   });
 
-  // ✅ eventData에서 기존 마니또 카드 데이터 불러오기
+  //  eventData에서 기존 마니또 카드 데이터 불러오기
   useEffect(() => {
     if (eventData.manitoCards?.length > 0) {
       const existingCard = eventData.manitoCards[0]; // 첫 번째 카드 사용
@@ -41,7 +41,7 @@ export default function MonitoCard() {
     setErrors(newErrors);
 
     if (!newErrors.nickname && !newErrors.bio && !newErrors.interest) {
-      // ✅ 기존 카드를 수정하는 방식으로 변경
+      //  기존 카드를 수정하는 방식으로 변경
       setEventData((prev) => ({
         ...prev,
         manitoCards: [
