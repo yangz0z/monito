@@ -68,6 +68,7 @@ const resources = {
       yourMonitoCard: "Your Monito Card",
       completeEvent: "Complete Event",
       eventCreatedSuccessfully: "Event created successfully!",
+      confirmTodayEvent: "Please check if the event date is today.",
     },
   },
   ko: {
@@ -134,6 +135,7 @@ const resources = {
       yourMonitoCard: "당신의 마니또 카드",
       completeEvent: "이벤트 완료",
       eventCreatedSuccessfully: "이벤트가 성공적으로 생성되었습니다!",
+      confirmTodayEvent: "이벤트 날짜가 오늘인지 확인해 주세요.",
     },
   },
 };

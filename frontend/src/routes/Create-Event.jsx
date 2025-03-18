@@ -23,6 +23,19 @@ export default function CreateEvent() {
     setErrors(newErrors);
 
     if (!newErrors.eventName && !newErrors.budget) {
+      const today = new Date();
+      const selected = new Date(selectedDate);
+
+      // 날짜 비교 (년, 월, 일만 비교)
+      if (
+        selected.getFullYear() === today.getFullYear() &&
+        selected.getMonth() === today.getMonth() &&
+        selected.getDate() === today.getDate()
+      ) {
+        const confirmMove = window.confirm(t("confirmTodayEvent"));
+        if (!confirmMove) return; // 사용자가 취소하면 페이지 이동 안 함
+      }
+
       // Context에 데이터 저장
       setEventData((prev) => ({
         ...prev,
