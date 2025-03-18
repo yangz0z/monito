@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlusCircle, FaTimesCircle } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
@@ -15,6 +15,9 @@ export default function Participant() {
   const [contact, setContact] = useState("");
   const [errors, setErrors] = useState({ name: false, contact: false });
   const [errorMessage, setErrorMessage] = useState("");
+
+  // ✅ 이름 입력 칸의 input 요소 참조 (포커스용)
+  const nameInputRef = useRef(null);
 
   const handleNext = () => {
     setErrorMessage("");
@@ -51,6 +54,11 @@ export default function Participant() {
       setContact("");
       setErrors({ name: false, contact: false });
       setErrorMessage("");
+
+      // ✅ 참가자 추가 후 이름 입력 칸에 자동 포커스
+      if (nameInputRef.current) {
+        nameInputRef.current.focus();
+      }
     } else {
       setErrors({ name: !name.trim(), contact: !contact.trim() });
     }
@@ -70,6 +78,7 @@ export default function Participant() {
       <form onSubmit={handleSubmit} className="ml-10">
         <div>
           <input
+            ref={nameInputRef} // ✅ input 요소 참조
             type="text"
             placeholder={t("namePlaceholder")}
             className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-80 ${

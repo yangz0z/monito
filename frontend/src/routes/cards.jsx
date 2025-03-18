@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useEvent } from "../Context/EventContext"; // Context 추가!
@@ -6,6 +6,10 @@ import { useEvent } from "../Context/EventContext"; // Context 추가!
 export default function MonitoCard() {
   const { t } = useTranslation();
   const { eventData, setEventData } = useEvent(); // 전역 상태 가져오기
+  const navigate = useNavigate();
+  const cardRef = useRef(null);
+
+  // ✅ 기존 eventData에서 마니또 카드 데이터를 불러와 초기화
   const [nickname, setNickname] = useState("");
   const [bio, setBio] = useState("");
   const [interest, setInterest] = useState("");
@@ -16,8 +20,16 @@ export default function MonitoCard() {
     interest: false,
   });
 
-  const navigate = useNavigate();
-  const cardRef = useRef(null);
+  // ✅ eventData에서 기존 마니또 카드 데이터 불러오기
+  useEffect(() => {
+    if (eventData.manitoCards?.length > 0) {
+      const existingCard = eventData.manitoCards[0]; // 첫 번째 카드 사용
+      setNickname(existingCard.nickname || "");
+      setBio(existingCard.bio || "");
+      setInterest(existingCard.interest || "");
+      setBgColor(existingCard.bgColor || "#325040");
+    }
+  }, [eventData]); // eventData 변경 시 실행
 
   const handleNext = () => {
     let newErrors = { nickname: false, bio: false, interest: false };
@@ -29,12 +41,16 @@ export default function MonitoCard() {
     setErrors(newErrors);
 
     if (!newErrors.nickname && !newErrors.bio && !newErrors.interest) {
-      // Context에 마니또 카드 정보 저장
+      // ✅ 기존 카드를 수정하는 방식으로 변경
       setEventData((prev) => ({
         ...prev,
         manitoCards: [
-          ...prev.manitoCards,
-          { nickname, bio, interest, bgColor },
+          {
+            nickname,
+            bio,
+            interest,
+            bgColor,
+          },
         ],
       }));
 
@@ -44,7 +60,7 @@ export default function MonitoCard() {
 
   return (
     <div className="flex flex-col items-center justify-center bg-gray-100 p-5 select-none">
-      <h1 className="text-2xl font-semibold text-gray-600 mb-5 ">
+      <h1 className="text-2xl font-semibold text-gray-600 mb-5">
         {t("createMonitoCard")}
       </h1>
 

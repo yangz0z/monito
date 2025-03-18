@@ -40,7 +40,7 @@ export default function ConfirmEvent() {
       </h1>
 
       {/* 메인 콘텐츠 영역 */}
-      <div className="flex flex-col md:flex-row gap-5 w-full max-w-4xl">
+      <div className="flex flex-col md:flex-row gap-5 w-full max-w-4xl ml-32">
         {/* 왼쪽 (이벤트 세부정보 + 참가자 목록) */}
         <div className="flex flex-col gap-5 w-full md:w-1/2">
           {/* 이벤트 정보 */}
@@ -71,13 +71,13 @@ export default function ConfirmEvent() {
           {/* 참가자 리스트 */}
           <div className="bg-white p-5 shadow-md text-sm rounded-md">
             <h2 className="font-semibold text-base">{t("participantList")}</h2>
-            <ul className="mt-2">
-              <li className="border-b py-1 font-bold text-gray-600">
+            <ul className="mt-2.5">
+              <li className="border-b font-bold text-gray-600">
                 {t("organizerLabel")}: {organizer.name} ({t("self")})
               </li>
               {eventData.participants?.length > 1 ? (
                 eventData.participants.slice(1).map((p, index) => (
-                  <li key={index} className="border-b py-1">
+                  <li key={index} className="border-b">
                     {p.name} - {p.contact}
                   </li>
                 ))
