@@ -1,16 +1,17 @@
 import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEvent } from "../Context/EventContext"; // Context 불러오기
+import CustomDatePicker from "../components/CustomDatePicker"; // DatePicker 컴포넌트 가져오기
 
 export default function CreateEvent() {
   const { t } = useTranslation();
   const { eventData, setEventData } = useEvent(); // 전역 상태 가져오기
-  const [eventName, setEventName] = useState(eventData.eventName);
-  const [budget, setBudget] = useState(eventData.budget);
-  const [selectedDate, setSelectedDate] = useState(eventData.selectedDate);
+  const [eventName, setEventName] = useState(eventData.eventName || "");
+  const [budget, setBudget] = useState(eventData.budget || "");
+  const [selectedDate, setSelectedDate] = useState(
+    eventData.selectedDate || new Date()
+  );
   const [errors, setErrors] = useState({ eventName: false, budget: false });
   const navigate = useNavigate();
 
@@ -26,17 +27,15 @@ export default function CreateEvent() {
       const today = new Date();
       const selected = new Date(selectedDate);
 
-      // 날짜 비교 (년, 월, 일만 비교)
       if (
         selected.getFullYear() === today.getFullYear() &&
         selected.getMonth() === today.getMonth() &&
         selected.getDate() === today.getDate()
       ) {
         const confirmMove = window.confirm(t("confirmTodayEvent"));
-        if (!confirmMove) return; // 사용자가 취소하면 페이지 이동 안 함
+        if (!confirmMove) return;
       }
 
-      // Context에 데이터 저장
       setEventData((prev) => ({
         ...prev,
         eventName,
@@ -44,7 +43,7 @@ export default function CreateEvent() {
         selectedDate,
       }));
 
-      navigate("/create-event/participant"); // 다음 페이지로 이동
+      navigate("/create-event/participant");
     }
   };
 
@@ -84,28 +83,11 @@ export default function CreateEvent() {
         )}
       </div>
 
-      <div className="mt-2 flex items-center justify-between w-64 relative overflow-visible">
-        <span className="text-sm font-semibold">{t("eventDate")}</span>
-        <DatePicker
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          dateFormat="yyyy-MM-dd"
-          className="border shadow rounded-md w-24 py-1.5 text-gray-700 text-center text-sm font-semibold"
-          withPortal
-          popperProps={{
-            modifiers: [
-              {
-                name: "preventOverflow",
-                options: { boundary: "viewport" },
-              },
-              {
-                name: "flip",
-                options: { fallbackPlacements: ["top", "bottom"] },
-              },
-            ],
-          }}
-        />
-      </div>
+      {/*CustomDatePicker를 사용하면서 selectedDate와 setSelectedDate 전달 */}
+      <CustomDatePicker
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
 
       <button
         onClick={handleNext}
