@@ -14,26 +14,10 @@ import MonitoCard from "./routes/cards";
 import ConfirmEvent from "./routes/ConfirmEvent";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./routes/NotFound";
-import { createGlobalStyle } from "styled-components";
-import styledReset from "styled-reset";
 import "./i18n";
 import LanguageProvider from "./Context/LanguageProvider";
 import { EventProvider } from "./Context/EventContext";
-
-const GlobalStyles = createGlobalStyle`
-  ${styledReset};
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
-    color: rgb(75 85 99 / var(--tw-text-opacity, 1));
-  }
-`;
+import GlobalStyles from "./GlobalStyle";
 
 const router = createBrowserRouter([
   {

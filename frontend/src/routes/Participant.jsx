@@ -106,7 +106,7 @@ export default function Participant() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start h-screen bg-gray-100 pt-60 mt-1 select-none">
+    <div className="flex flex-col items-center justify-start h-screen pt-60 mt-1 select-none">
       <p className="text-2xl text-gray-600 mb-5 font-semibold select-none">
         {t("addParticipants")}
       </p>

@@ -30,11 +30,11 @@ export default function ConfirmEvent() {
 
   const handleComplete = () => {
     alert(t("eventCreatedSuccessfully"));
-    navigate("/dashboard");
+    navigate("/dash-board");
   };
 
   return (
-    <div className="flex flex-col items-center bg-gray-100 min-h-screen select-none p-10">
+    <div className="flex flex-col items-center min-h-screen select-none p-10">
       <h1 className="text-2xl font-semibold text-gray-600 mb-5">
         {t("reviewEvent")}
       </h1>
@@ -73,7 +73,7 @@ export default function ConfirmEvent() {
             <h2 className="font-semibold text-base">{t("participantList")}</h2>
             <ul className="mt-2.5">
               <li className="border-b font-bold text-gray-600">
-                {t("organizerLabel")}: {organizer.name} ({t("self")})
+                {t("organizerLabel")} : {organizer.name}({t("self")})
               </li>
               {eventData.participants?.length > 1 ? (
                 eventData.participants.slice(1).map((p, index) => (

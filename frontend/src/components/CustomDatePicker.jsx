@@ -6,30 +6,29 @@ import { useTranslation } from "react-i18next";
 export default function CustomDatePicker({ selectedDate, setSelectedDate }) {
   const { t } = useTranslation();
 
+  // selectedDate가 string이면 Date 객체로 변환
+  const validDate =
+    selectedDate instanceof Date ? selectedDate : new Date(selectedDate);
+
   return (
     <div className="mt-2 flex items-center justify-between w-64 relative overflow-visible">
       <span className="text-sm font-semibold">{t("eventDate")}</span>
       <div className="absolute right-0">
-        {" "}
-        {/* 추가된 div */}
         <DatePicker
-          selected={selectedDate}
+          selected={validDate} // 수정된 부분
           onChange={(date) => setSelectedDate(date)}
           dateFormat="yyyy-MM-dd"
           className="border shadow rounded-md w-24 py-1.5 text-gray-700 text-center text-sm font-semibold"
           popperProps={{
             modifiers: [
-              {
-                name: "preventOverflow",
-                options: { boundary: "viewport" },
-              },
+              { name: "preventOverflow", options: { boundary: "viewport" } },
               {
                 name: "flip",
                 options: { fallbackPlacements: ["top", "bottom"] },
               },
             ],
           }}
-          popperPlacement="bottom-end" // <--- 오른쪽 정렬 강제
+          popperPlacement="bottom-end"
         />
       </div>
     </div>

@@ -58,7 +58,7 @@ export default function DrawResult() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start h-screen bg-gray-100 text-white pt-60 select-none">
+    <div className="flex flex-col items-center justify-start h-screen text-white pt-60 select-none">
       <h1 className="text-2xl font-semibold text-gray-600 mb-5 ">
         {isFinished ? t("finalResult") : t("drawing")}
       </h1>

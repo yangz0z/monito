@@ -55,7 +55,7 @@ const GoogleLoginForm = () => {
 
   return (
     <GoogleOAuthProvider clientId={CLIENT_ID}>
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-100 select-none">
+      <div className="flex flex-col items-center justify-center h-screen select-none">
         {!user ? (
           <>
             <div className="select-none pointer-events-none">
