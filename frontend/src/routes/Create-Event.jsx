@@ -15,6 +15,14 @@ export default function CreateEvent() {
   const [errors, setErrors] = useState({ eventName: false, budget: false });
   const navigate = useNavigate();
 
+  const handleBudgetChange = (e) => {
+    let value = e.target.value.replace(/[^\d]/g, ""); // 숫자 이외 문자 제거
+    let formattedValue = value
+      ? new Intl.NumberFormat("ko-KR").format(value)
+      : "";
+    setBudget(formattedValue);
+  };
+
   const handleNext = () => {
     let newErrors = { eventName: false, budget: false };
 
@@ -73,11 +81,12 @@ export default function CreateEvent() {
           type="text"
           placeholder={t("budgetPlaceholder")}
           value={budget}
-          onChange={(e) => setBudget(e.target.value)}
+          onChange={handleBudgetChange}
           className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-full ${
             errors.budget ? "border-red-500" : ""
           }`}
         />
+
         {errors.budget && (
           <p className="text-red-500 text-xs mt-1">{t("requiredField")}</p>
         )}

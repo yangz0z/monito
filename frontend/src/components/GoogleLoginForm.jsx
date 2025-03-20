@@ -61,7 +61,7 @@ const GoogleLoginForm = () => {
             <div className="select-none pointer-events-none">
               <img src="/icon_gift.png" alt="Gift Icon" draggable="false" />
             </div>
-            <h1 className="text-4xl font-serif text-gray-600 font-medium mt-2 mb-5 font-semibold">
+            <h1 className="text-4xl font-serif text-gray-700 font-medium mt-2 mb-5 font-semibold">
               MONITO
             </h1>
             <p className="text-base text-gray-600 mb-0.5 font-semibold">

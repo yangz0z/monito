@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { FaUserCircle, FaRegQuestionCircle } from "react-icons/fa";
+import { FaUserCircle, FaRegQuestionCircle, FaHome } from "react-icons/fa";
 import { IoIosGlobe } from "react-icons/io";
 import { useTranslation } from "react-i18next";
 import useLanguage from "../Context/useLanguage";
@@ -15,8 +15,8 @@ export default function Layout() {
   });
 
   const [openDropdown, setOpenDropdown] = useState(null);
-
   const navigate = useNavigate();
+
   const dropdownRef = useRef(null);
   const langDropdownRef = useRef(null);
   const helpDropdownRef = useRef(null);
@@ -70,11 +70,20 @@ export default function Layout() {
       <header className="flex justify-between items-center p-4 relative">
         <button
           onClick={() => navigate("/")}
-          className="text-2xl font-serif	 font-bold select-none"
+          className="text-2xl font-serif text-gray-700 font-bold select-none"
         >
           MONITO
         </button>
+
         <div className="flex items-center space-x-2">
+          {/* 🏠 FaHome 홈 버튼 */}
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center justify-center p-2 text-gray-500 rounded-md text-2xl hover:bg-gray-200 hover:text-gray-700"
+          >
+            <FaHome />
+          </button>
+
           {/* 도움말 드롭다운 메뉴 */}
           <div className="relative" ref={helpDropdownRef}>
             <button
@@ -120,13 +129,17 @@ export default function Layout() {
               <IoIosGlobe />
             </button>
             {openDropdown === "lang" && (
-              <div className="fixed  top-16 w-48 text-sm bg-white shadow-lg rounded-md overflow-hidden border p-3 z-50">
+              <div className="fixed top-16 w-48 text-sm bg-white shadow-lg rounded-md overflow-hidden border p-3 z-50">
                 <button
                   onClick={() => {
                     changeLanguage("ko");
                     setOpenDropdown(null);
                   }}
-                  className={`block w-full text-left px-4 py-3 ${language === "ko" ? "bg-gray-200" : "text-gray-700 hover:bg-gray-100"} border-b border-gray-200 rounded-t-md transition-all`}
+                  className={`block w-full text-left px-4 py-3 ${
+                    language === "ko"
+                      ? "bg-gray-200"
+                      : "text-gray-700 hover:bg-gray-100"
+                  } border-b border-gray-200 rounded-t-md transition-all`}
                 >
                   한국어
                 </button>
@@ -135,7 +148,11 @@ export default function Layout() {
                     changeLanguage("en");
                     setOpenDropdown(null);
                   }}
-                  className={`block w-full text-left px-4 py-3 ${language === "en" ? "bg-gray-200" : "text-gray-700 hover:bg-gray-100"} rounded-b-md transition-all`}
+                  className={`block w-full text-left px-4 py-3 ${
+                    language === "en"
+                      ? "bg-gray-200"
+                      : "text-gray-700 hover:bg-gray-100"
+                  } rounded-b-md transition-all`}
                 >
                   English
                 </button>
@@ -181,6 +198,7 @@ export default function Layout() {
           )}
         </div>
       </header>
+
       <main>
         <Outlet />
       </main>
