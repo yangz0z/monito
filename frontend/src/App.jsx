@@ -12,7 +12,8 @@ import DashBoard from "./routes/dash-board";
 import Participant from "./routes/Participant";
 import MonitoCard from "./routes/cards";
 import ConfirmEvent from "./routes/ConfirmEvent";
-import ProtectedRoute from "./components/ProtectedRoute"; // 보호된 라우트 추가
+import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./routes/NotFound";
 import { createGlobalStyle } from "styled-components";
 import styledReset from "styled-reset";
 import "./i18n";
@@ -37,74 +38,38 @@ const GlobalStyles = createGlobalStyle`
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ProtectedRoute />, // 보호된 라우트 추가 (로그인 필요)
+    element: <ProtectedRoute />,
     children: [
       {
         path: "",
-        element: <Layout />, // Layout 내부에서 Outlet 사용
+        element: <Layout />,
         children: [
-          {
-            path: "",
-            element: <Home />,
-          },
-          {
-            path: "profile",
-            element: <Profile />,
-          },
-          {
-            path: "dash-board",
-            element: <DashBoard />,
-          },
-          {
-            path: "create-event",
-            element: <CreateEvent />,
-          },
-          {
-            path: "live-event",
-            element: <LiveEvent />,
-          },
-          {
-            path: "join-event",
-            element: <JoinEvent />,
-          },
-          {
-            path: "live-event/draw-result",
-            element: <DrawResult />,
-          },
-          {
-            path: "create-event/participant",
-            element: <Participant />,
-          },
-          {
-            path: "create-event/cards",
-            element: <MonitoCard />,
-          },
-          {
-            path: "create-event/confirm",
-            element: <ConfirmEvent />,
-          },
+          { path: "", element: <Home /> },
+          { path: "profile", element: <Profile /> },
+          { path: "dash-board", element: <DashBoard /> },
+          { path: "create-event", element: <CreateEvent /> },
+          { path: "live-event", element: <LiveEvent /> },
+          { path: "join-event", element: <JoinEvent /> },
+          { path: "live-event/draw-result", element: <DrawResult /> },
+          { path: "create-event/participant", element: <Participant /> },
+          { path: "create-event/cards", element: <MonitoCard /> },
+          { path: "create-event/confirm", element: <ConfirmEvent /> },
         ],
       },
     ],
   },
-  {
-    path: "/login",
-    element: <Login />,
-  },
+  { path: "/login", element: <Login /> },
+  { path: "*", element: <NotFound /> },
 ]);
 
 function App() {
   return (
-    <>
-      <LanguageProvider>
-        <EventProvider>
-          {" "}
-          {/* 이벤트 컨텍스트 추가 */}
-          <GlobalStyles />
-          <RouterProvider router={router} />
-        </EventProvider>
-      </LanguageProvider>
-    </>
+    <LanguageProvider>
+      <EventProvider>
+        <GlobalStyles />
+        <RouterProvider router={router} />
+      </EventProvider>
+    </LanguageProvider>
   );
 }
 
