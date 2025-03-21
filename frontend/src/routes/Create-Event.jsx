@@ -9,7 +9,7 @@ export default function CreateEvent() {
   const { eventData, setEventData } = useEvent(); // 전역 상태 가져오기
   const navigate = useNavigate();
 
-  // ✅ 초기값 설정: selectedDate가 문자열이면 Date 객체로 변환
+  //  초기값 설정: selectedDate가 문자열이면 Date 객체로 변환
   const [eventName, setEventName] = useState(eventData.eventName || "");
   const [budget, setBudget] = useState(eventData.budget || "");
   const [selectedDate, setSelectedDate] = useState(() => {
@@ -19,7 +19,7 @@ export default function CreateEvent() {
   });
   const [errors, setErrors] = useState({ eventName: false, budget: false });
 
-  // ✅ 예산 입력 시 숫자만 허용하고, 천 단위 콤마 추가
+  //  예산 입력 시 숫자만 허용하고, 천 단위 콤마 추가
   const handleBudgetChange = (e) => {
     let value = e.target.value.replace(/[^\d]/g, ""); // 숫자 이외 문자 제거
     let formattedValue = value
@@ -28,7 +28,7 @@ export default function CreateEvent() {
     setBudget(formattedValue);
   };
 
-  // ✅ "다음" 버튼 클릭 시 이벤트 정보 저장 후 이동
+  //  "다음" 버튼 클릭 시 이벤트 정보 저장 후 이동
   const handleNext = () => {
     let newErrors = { eventName: false, budget: false };
 
@@ -41,7 +41,7 @@ export default function CreateEvent() {
       const today = new Date();
       const selected = new Date(selectedDate);
 
-      // 🔥 선택한 날짜가 오늘인지 확인
+      //  선택한 날짜가 오늘인지 확인
       if (
         selected.getFullYear() === today.getFullYear() &&
         selected.getMonth() === today.getMonth() &&
@@ -51,7 +51,7 @@ export default function CreateEvent() {
         if (!confirmMove) return;
       }
 
-      // 🔥 selectedDate를 `ISO String`으로 변환하여 저장 (JSON 호환성 유지)
+      //  selectedDate를 `ISO String`으로 변환하여 저장 (JSON 호환성 유지)
       setEventData((prev) => ({
         ...prev,
         eventName,
@@ -104,7 +104,7 @@ export default function CreateEvent() {
         )}
       </div>
 
-      {/* 🔥 CustomDatePicker를 사용하며 selectedDate와 setSelectedDate 전달 */}
+      {/*  CustomDatePicker를 사용하며 selectedDate와 setSelectedDate 전달 */}
       <CustomDatePicker
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}

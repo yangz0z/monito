@@ -69,6 +69,11 @@ const resources = {
       completeEvent: "Complete Event",
       eventCreatedSuccessfully: "Event created successfully!",
       confirmTodayEvent: "Please check if the event date is today.",
+      delete: "Delete",
+      viewEvent: "View Event",
+      myEvents: "My Events",
+      createNewEvent: "Create New Event",
+      noEventsFound: "No events found.",
     },
   },
   ko: {
@@ -136,6 +141,11 @@ const resources = {
       completeEvent: "이벤트 완료",
       eventCreatedSuccessfully: "이벤트가 성공적으로 생성되었습니다!",
       confirmTodayEvent: "이벤트 날짜가 오늘인지 확인해 주세요.",
+      delete: "삭제",
+      viewEvent: "이벤트 보기",
+      myEvents: "내 이벤트 목록",
+      createNewEvent: "새 이벤트 만들기",
+      noEventsFound: "No events found.",
     },
   },
 };
