@@ -1,181 +1,179 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlusCircle, FaTimesCircle } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
-import { useEvent } from "../Context/EventContext"; // Context 추가!
+import { useEvent } from "../Context/EventContext";
 
 export default function Participant() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { eventData, setEventData } = useEvent(); // 전역 상태 가져오기
-  const [participants, setParticipants] = useState([]);
-  const [name, setName] = useState("");
-  const [contact, setContact] = useState("");
+  const { eventData, setEventData } = useEvent();
+
+  const [participants, setParticipants] = useState(
+    eventData.participants || []
+  );
+  const [inputName, setInputName] = useState("");
+  const [inputContact, setInputContact] = useState("");
   const [errors, setErrors] = useState({ name: false, contact: false });
   const [errorMessage, setErrorMessage] = useState("");
 
-  //  이름 입력 칸의 input 요소 참조 (포커스용)
-  const nameInputRef = useRef(null);
-
-  //  초기 로딩 시 Context에서 참가자 데이터 불러오기
-  useEffect(() => {
-    if (eventData.participants) {
-      setParticipants(eventData.participants);
-    }
-  }, [eventData.participants]);
-
-  //  휴대폰 번호 자동 포맷팅 함수 추가
+  // 연락처 자동 포맷팅
   const handleContactChange = (e) => {
-    let value = e.target.value.replace(/\D/g, ""); // 숫자만 입력받기
-
-    if (value.length > 11) {
-      value = value.slice(0, 11); // 최대 11자리 제한
-    }
-
-    // 번호 형식 적용
-    if (value.length <= 3) {
-      setContact(value);
-    } else if (value.length <= 7) {
-      setContact(`${value.slice(0, 3)}-${value.slice(3)}`);
-    } else {
-      setContact(`${value.slice(0, 3)}-${value.slice(3, 7)}-${value.slice(7)}`);
-    }
+    let value = e.target.value.replace(/\D/g, "");
+    if (value.length > 11) value = value.slice(0, 11);
+    if (value.length <= 3) setInputContact(value);
+    else if (value.length <= 7)
+      setInputContact(`${value.slice(0, 3)}-${value.slice(3)}`);
+    else
+      setInputContact(
+        `${value.slice(0, 3)}-${value.slice(3, 7)}-${value.slice(7)}`
+      );
   };
 
-  const handleNext = () => {
+  // 참가자 추가
+  const handleAdd = (e) => {
+    e.preventDefault();
+    const name = inputName.trim();
+    const contact = inputContact.trim();
+
+    const isDuplicateName = participants.some((p) => p.name === name);
+    const isDuplicateContact = participants.some(
+      (p) => p.contact.replace(/-/g, "") === contact.replace(/-/g, "")
+    );
+
+    // 초기화
+    setErrors({ name: false, contact: false });
     setErrorMessage("");
 
-    if (!participants.length) {
-      if (name.trim() && contact.trim()) {
-        setErrorMessage(t("pressAddToIncludeParticipant"));
-        return;
-      }
-      setErrors({ name: !name.trim(), contact: !contact.trim() });
+    if (!name || !contact) {
+      setErrors({
+        name: !name,
+        contact: !contact,
+      });
+      setErrorMessage(
+        <div className="text-red-500 text-xs mt-1 font-normal text-center">
+          <p>{t("requiredField")}</p>
+        </div>
+      );
       return;
     }
 
+    if (isDuplicateName || isDuplicateContact) {
+      setErrors({
+        name: isDuplicateName,
+        contact: isDuplicateContact,
+      });
+      setErrorMessage(
+        <div className="text-red-500 text-xs mt-1 font-normal text-center">
+          <p>{t("nameAlreadyExists")}</p>
+          <p>{t("chooseAnotherName")}</p>
+        </div>
+      );
+      return;
+    }
+
+    const updated = [...participants, { name, contact }];
+    setParticipants(updated);
+    setEventData((prev) => ({ ...prev, participants: updated }));
+    setInputName("");
+    setInputContact("");
+  };
+
+  // 참가자 삭제
+  const handleRemove = (index) => {
+    const updated = participants.filter((_, i) => i !== index);
+    setParticipants(updated);
+    setEventData((prev) => ({ ...prev, participants: updated }));
+  };
+
+  // 다음 단계로 이동
+  const handleNext = () => {
     if (participants.length < 3) {
-      setErrorMessage(t("minThreeParticipants"));
+      setErrors({ name: true, contact: true });
+      setErrorMessage(
+        <div className="text-red-500 text-xs mt-1 font-normal text-center">
+          <p>{t("minThreeParticipants")}</p>
+        </div>
+      );
       return;
     }
-
-    //  Context에 참가자 정보 저장 (페이지 새로고침 시 유지됨)
-    setEventData((prev) => ({
-      ...prev,
-      participants,
-    }));
 
     navigate("/create-event/cards");
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (name.trim() && contact.trim()) {
-      const newParticipants = [...participants, { name, contact }];
-      setParticipants(newParticipants);
-
-      //  Context 업데이트
-      setEventData((prev) => ({
-        ...prev,
-        participants: newParticipants,
-      }));
-
-      setName("");
-      setContact("");
-      setErrors({ name: false, contact: false });
-      setErrorMessage("");
-
-      //  참가자 추가 후 이름 입력 칸에 자동 포커스
-      if (nameInputRef.current) {
-        nameInputRef.current.focus();
-      }
-    } else {
-      setErrors({ name: !name.trim(), contact: !contact.trim() });
-    }
-  };
-
-  const handleRemoveParticipant = (index) => {
-    const updatedParticipants = participants.filter((_, i) => i !== index);
-    setParticipants(updatedParticipants);
-
-    //  Context에도 삭제된 참가자 정보 업데이트 (새로고침 시 유지됨)
-    setEventData((prev) => ({
-      ...prev,
-      participants: updatedParticipants,
-    }));
-  };
-
   return (
-    <div className="flex flex-col items-center justify-start h-screen pt-60 mt-1 select-none">
-      <p className="text-2xl text-gray-600 mb-5 font-semibold select-none">
+    <div className="flex flex-col items-center justify-start h-screen pt-60 select-none">
+      <p className="text-2xl text-gray-600 mb-1 font-semibold">
         {t("addParticipants")}
       </p>
 
-      <form onSubmit={handleSubmit} className="ml-10">
-        <div>
-          <input
-            ref={nameInputRef} //  input 요소 참조
-            type="text"
-            placeholder={t("namePlaceholder")}
-            className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-80 ${
-              errors.name ? "border-red-500" : ""
-            }`}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          {errors.name && (
-            <p className="text-red-500 text-xs mt-1">{t("requiredField")}</p>
-          )}
-        </div>
-
-        <div className="mt-1 flex items-center space-x-2">
+      {/* 입력 폼 */}
+      <form
+        onSubmit={handleAdd}
+        className="mt-4 ml-2 flex flex-col space-y-2 items-start"
+      >
+        <input
+          type="text"
+          placeholder={t("namePlaceholder")}
+          value={inputName}
+          onChange={(e) => {
+            setInputName(e.target.value);
+            setErrors((prev) => ({ ...prev, name: false }));
+            setErrorMessage("");
+          }}
+          className={`border shadow pl-2 rounded-md px-6 py-1.5 text-gray-700 w-72 ${
+            errors.name ? "border-red-500" : ""
+          }`}
+        />
+        <div className="flex items-center space-x-2">
           <input
             type="text"
             placeholder={t("contactPlaceholder")}
-            className={`border shadow rounded-md pl-2 px-6 py-1.5 text-gray-700 w-80 ${
+            value={inputContact}
+            onChange={(e) => {
+              handleContactChange(e);
+              setErrors((prev) => ({ ...prev, contact: false }));
+              setErrorMessage("");
+            }}
+            maxLength={13}
+            className={`border shadow pl-2 rounded-md px-6 py-1.5 text-gray-700 w-72 ${
               errors.contact ? "border-red-500" : ""
             }`}
-            value={contact}
-            onChange={handleContactChange} //  자동 포맷팅 함수 적용
-            maxLength={13} // 000-0000-0000 (최대 13자리)
           />
-          <button type="submit" className="ml-2">
+          <button type="submit">
             <FaPlusCircle className="text-3xl text-[#FF8F00]" />
           </button>
         </div>
-        {errors.contact && (
-          <p className="text-red-500 text-xs mt-1">{t("requiredField")}</p>
-        )}
       </form>
 
-      {/* 참가자 목록 (스크롤 가능) */}
-      <div
-        className="w-80 space-y-4 mt-6 overflow-y-auto bg-gray-100 shadow-md rounded-md"
-        style={{ maxHeight: "300px" }} // 스크롤 높이 제한
-      >
-        {participants.map((participant, index) => (
-          <div
-            key={index}
-            className="flex justify-between border bg-gray-600 text-white items-center shadow px-3 py-3 rounded-lg"
-          >
-            <span>
-              <div className="text-base">{participant.name}</div>
-              <div className="text-xs">{`${t("participantLabel")} - ${participant.contact}`}</div>
-            </span>
-            <button onClick={() => handleRemoveParticipant(index)}>
-              <FaTimesCircle className="text-red-500 text-xl" />
-            </button>
-          </div>
-        ))}
-      </div>
-
       {errorMessage && (
-        <p className="text-red-500 text-sm mt-4">{errorMessage}</p>
+        <div className="text-red-500 text-sm mt-2 font-semibold text-center w-72">
+          {errorMessage}
+        </div>
       )}
 
+      {/* 참가자 목록 */}
+      <ul className="mt-5 w-80 max-h-60 overflow-y-auto">
+        {participants.map((p, idx) => (
+          <li
+            key={idx}
+            className="flex justify-between items-center bg-white px-4 py-2 rounded-md shadow mb-2"
+          >
+            <span>
+              <div className="font-semibold">{p.name}</div>
+              <div className="text-xs text-gray-500">{p.contact}</div>
+            </span>
+            <button onClick={() => handleRemove(idx)}>
+              <FaTimesCircle className="text-red-500 text-xl" />
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      {/* 다음 버튼 */}
       <button
         onClick={handleNext}
-        className="mt-14 px-8 py-3 text-white bg-[#D32F2F] shadow-xl rounded-full hover:bg-red-700 font-semibold"
+        className="mt-6 px-8 py-3 font-semibold shadow-xl text-white bg-[#D32F2F] rounded-full hover:bg-red-700"
       >
         {t("next")}
       </button>

@@ -25,9 +25,9 @@ export default function LiveEvent() {
 
     if (participants.includes(trimmedValue)) {
       setError(
-        <div className="text-red-500 text-xs mt-1 font-normal">
+        <div className="text-red-500 text-xs mt-1 font-normal text-center">
           <p>{t("nameAlreadyExists")}</p>
-          <p className="text-center">{t("chooseAnotherName")}</p>
+          <p>{t("chooseAnotherName")}</p>
         </div>
       );
       return;
