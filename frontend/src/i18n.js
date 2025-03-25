@@ -155,7 +155,7 @@ i18n
   .use(initReactI18next) // React와 연결
   .init({
     resources,
-    lng: localStorage.getItem("language") || "ko", // ✅ 초기값을 localStorage에서 가져옴
+    lng: localStorage.getItem("language") || "ko", //  초기값을 localStorage에서 가져옴
     fallbackLng: "ko", // 기본 언어
     interpolation: {
       escapeValue: false,
